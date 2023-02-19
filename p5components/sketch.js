@@ -12,9 +12,6 @@ let points;
 let right_eye;
 let left_eye;
 
-async function getJSON(path) {
-    return fetch(path).then(r => r.json());
-}
 function preload() {
 	// loading json files
 	selfy_photo = loadImage('images/selfy.png');
