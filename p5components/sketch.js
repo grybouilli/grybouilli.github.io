@@ -1,6 +1,3 @@
-// //import { Selfy } from './Selfy.js'; 
-// const Selfy = require(["./Selfy"]);
-
 let selfy_photo;
 let canvasHeight;
 let canvasWidth;
@@ -11,7 +8,8 @@ let imageWidth;
 function preload() {
 	imageHeight = 500;
 	imageWidth = imageHeight;
-	selfy_photo = new Selfy(0, 0, imageWidth, imageHeight, 'images/selfy.png');
+	selfy_photo = new Selfy(0, 0, imageWidth, imageHeight, 'images/selfy_no_eye.png');
+	selfy_photo.loadJSON('json!./images/selfy.json');
 }
 
 function setup() {
