@@ -70,32 +70,35 @@ function Selfy(posx, posy, sizew, sizeh, file)
      */
     this.follow = function(px, py)
     {
+        thisCompo = this.component;
         let controlEye = function (eye)
         {
-            if(isInEllipse(px, py, eye.w/2, eye.h/2, eye.x, eye.y))
+            actualPos = { x: eye.x + thisCompo.x, y: eye.y + thisCompo.y };
+            if(isInEllipse(px, py, eye.w/2, eye.h/2, actualPos.x, actualPos.y))
             {
-                eye.pupil.x = px;
-                eye.pupil.y = py; 
+                eye.pupil.x = px - thisCompo.x;
+                eye.pupil.y = py - thisCompo.y; 
             } else
             {
-                let [aLine, bLine] = getLineCoef(px, py, eye.x, eye.y);
+                let [aLine, bLine] = getLineCoef(px, py, actualPos.x, actualPos.y);
                 let limiter = 0.6;
-                let target = intersectionLineEllipse(aLine, bLine, eye.x, eye.y, limiter*eye.w/2, limiter*eye.h/2);
+                let target = intersectionLineEllipse(aLine, bLine, actualPos.x, actualPos.y, limiter*eye.w/2, limiter*eye.h/2);
                 if(dist(target[0][0], target[0][1], px, py) > dist(target[1][0], target[1][1], px, py))
                 {
-                    eye.pupil.x = target[1][0];
-                    eye.pupil.y = target[1][1];
+                    eye.pupil.x = target[1][0] - thisCompo.x;
+                    eye.pupil.y = target[1][1] - thisCompo.y;
                 } else
                 {
-                    eye.pupil.x = target[0][0];
-                    eye.pupil.y = target[0][1];   
+                    eye.pupil.x = target[0][0] - thisCompo.x;
+                    eye.pupil.y = target[0][1] - thisCompo.y;   
                 }
             }
         }
         try
         {
             controlEye(this.right_eye); 
-        } catch(err) {}
+        } catch(err) {
+        }
         try
         {
             controlEye(this.left_eye);
