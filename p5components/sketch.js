@@ -9,12 +9,11 @@ function preload() {
 	imageHeight = 500;
 	imageWidth = imageHeight;
 	selfy_photo = new Selfy(0, 0, imageWidth, imageHeight, 'images/selfy_no_eye.png');
-	selfy_photo.loadJSON('json!./images/selfy.json');
+	selfy_photo.loadJSON('libraries/json!./images/selfy.json');
 }
 
 function setup() {
-	
-	console.log(selfy_photo);
+
 	canvasHeight = 500;
 	canvasWidth = canvasHeight;
 	
@@ -24,6 +23,17 @@ function setup() {
 }
 
 function draw() {
+
 	background(220);
+	try{
+		selfy_photo.follow(mouseX, mouseY);
+	} catch(err)
+	{
+		console.log(err.message);
+	}
 	selfy_photo.show();
+}
+
+function mouseReleased()
+{
 }
