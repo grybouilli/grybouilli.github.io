@@ -98,11 +98,14 @@ function Selfy(posx, posy, sizew, sizeh, file)
         {
             controlEye(this.right_eye); 
         } catch(err) {
+            console.log(err.message);
         }
         try
         {
             controlEye(this.left_eye);
-        } catch(err) {}
+        } catch(err) {
+            console.log(err.message);
+        }
     }
 
     this.show = function()
