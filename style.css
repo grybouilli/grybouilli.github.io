@@ -1,0 +1,138 @@
+@font-face {
+	font-family: "lgc";
+	src: url("assets/Louis_George_Cafe.ttf");
+}
+
+@font-face {
+	font-family: "student-teacher";
+	src: url("assets/TheStudentsTeacher-Regular.ttf");
+}
+
+:root {
+	--main-bg-color: #5E548E;
+	--blue-trans: #BBD0FF;
+	--pink-trans: #FFD6FF;
+	--dark-violet: #231942
+}
+
+
+body {
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin : 0;
+	background-color: var(--main-bg-color);
+}
+
+.container {
+	font-family: "lgc";
+	font-size: 36px;
+}
+
+.trans-text-head {
+	filter: drop-shadow(2px 2px 1px var(--dark-violet));
+	background: linear-gradient(to right, var(--blue-trans) 45%, var(--pink-trans), #ffffff, var(--pink-trans), var(--blue-trans) 55%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.trans-text {
+	filter: drop-shadow(2px 2px 1px var(--dark-violet));
+	background: linear-gradient(to right, #BBD0FF, #FFD6FF, #ffffff, #FFD6FF, #BBD0FF);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+h1 {
+	transition: 700ms ease;
+	font-variation-settings: "wght" 311;
+	margin-bottom: 0.8rem;
+	outline: none;
+	text-align: center;
+}
+
+h1:hover {
+	font-variation-settings: "wght" 582;
+	letter-spacing: 3px;
+}
+
+#selfy-holder {
+	margin: 0;
+	display: flex;
+
+	/* This centers our sketch horizontally. */
+	justify-content: center;
+
+	/* This centers our sketch vertically. */
+	align-items: center;
+}
+
+.container-block {
+	filter: drop-shadow(1px 1px 1px var(--dark-violet));
+	font-family: "lgc";
+	font-size: 24px;
+	padding: 4em;
+	text-align: center;
+	color: var(--blue-trans)
+}
+
+mark {
+	background-color: var(--pink-trans);
+	color: var(--dark-violet);
+}
+
+
+.highlight-container,
+.highlight {
+	color: var(--dark-violet);
+	position: relative;
+}
+
+.highlight-container {
+	display: inline-block;
+}
+
+.highlight-container:before {
+	content: "";
+	position: absolute;
+	width: calc(100% + 4px);
+	height: 90%;
+	left: -2px;
+	bottom: 0;
+	z-index: -1;
+	transform: rotate(-2deg);
+	background: var(--pink-trans);
+	
+}
+
+a {
+	outline: none;
+	text-decoration: none;
+	padding: 2px 1px 0;
+  }
+  
+  a:link {
+	color: var(--dark-violet);
+  }
+  
+  a:visited {
+	color: var(--dark-violet);
+  }
+  
+  a:focus {
+	border-bottom: 1px solid;
+	background: var(--blue-trans);
+  }
+  
+  a:hover {
+	border-bottom: 1px solid;
+	background: var(--pink-trans);
+  }
+  
+  a:active {
+	background: var(--dark-violet);
+	color: var(--pink-trans);
+  }
