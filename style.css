@@ -23,7 +23,7 @@ body {
 	left: 0;
 	bottom: 0;
 	right: 0;
-	margin : 0;
+	margin: 0;
 	background-color: var(--main-bg-color);
 }
 
@@ -70,6 +70,47 @@ h1:hover {
 	align-items: center;
 }
 
+/* CSS */
+.button-52 {
+	font-family: "lgc";
+	font-size: 16px;
+	font-weight: 200;
+	letter-spacing: 1px;
+	padding: 13px 20px 13px;
+	margin: 0px 50px 0px 50px;
+	outline: 0;
+	border: 1px solid black;
+	cursor: pointer;
+	position: relative;
+	background-color: rgba(0, 0, 0, 0);
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+}
+
+.button-52:after {
+	content: "";
+	background-color: var(--pink-trans);
+	width: 100%;
+	z-index: -1;
+	position: absolute;
+	height: 100%;
+	top: 5px;
+	left: 5px;
+	transition: 0.2s;
+}
+
+.button-52:hover:after {
+	top: 0px;
+	left: 0px;
+}
+
+@media (min-width: 768px) {
+	.button-52 {
+		padding: 13px 50px 13px;
+	}
+}
+
 .container-block {
 	filter: drop-shadow(1px 1px 1px var(--dark-violet));
 	font-family: "lgc";
@@ -105,34 +146,34 @@ mark {
 	z-index: -1;
 	transform: rotate(-2deg);
 	background: var(--pink-trans);
-	
+
 }
 
 a {
 	outline: none;
 	text-decoration: none;
 	padding: 2px 1px 0;
-  }
-  
-  a:link {
+}
+
+a:link {
 	color: var(--dark-violet);
-  }
-  
-  a:visited {
+}
+
+a:visited {
 	color: var(--dark-violet);
-  }
-  
-  a:focus {
+}
+
+a:focus {
 	border-bottom: 1px solid;
 	background: var(--blue-trans);
-  }
-  
-  a:hover {
+}
+
+a:hover {
 	border-bottom: 1px solid;
 	background: var(--pink-trans);
-  }
-  
-  a:active {
+}
+
+a:active {
 	background: var(--dark-violet);
 	color: var(--pink-trans);
-  }
+}
