@@ -9,7 +9,7 @@ function preload() {
 	imageHeight = 200;
 	imageWidth = imageHeight;
 	selfy_photo = new Selfy(0, 0, imageWidth, imageHeight, 'images/selfy_no_eye.png');
-	selfy_photo.loadJSON('libraries/json!./images/selfy.json');
+	selfy_photo.loadJSON('/images/selfy.json');
 }
 
 function setup() {

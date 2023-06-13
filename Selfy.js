@@ -25,7 +25,9 @@ function Selfy(posx, posy, sizew, sizeh, file)
 
     this.loadJSON = function(file)
     {
-        require([file], data=> {this.specs = data.specs; this.setupEyes()});
+        fetch(file)
+            .then(response => response.json())
+            .then(data => {this.specs = data.specs; this.setupEyes()});
     }
 
     this.setupEyes = function()
