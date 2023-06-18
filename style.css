@@ -140,7 +140,7 @@ mark {
 	content: "";
 	position: absolute;
 	width: calc(100% + 4px);
-	height: 90%;
+	height: 95%;
 	left: -2px;
 	bottom: 0;
 	z-index: -1;
