@@ -23,19 +23,33 @@ body {
   color: #BBD0FF;
 }
 
-h2 {
-  margin: 5%;
-  text-align: center;
-  font-size: 4rem;
-  font-weight: 100;
+.trans-text-head {
+	filter: drop-shadow(2px 2px 1px var(--dark-violet));
+	background: linear-gradient(to right, var(--blue-trans) 45%, var(--pink-trans), #ffffff, var(--pink-trans), var(--blue-trans) 55%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 h1 {
+  margin: 5%;
+  text-align: center;
+  font-size: 4rem;
+  /* font-weight: 100; */
+  transition: 700ms ease;
+}
+
+h1:hover {
+	font-variation-settings: "wght" 582;
+	letter-spacing: 3px;
+}
+
+h2 {
   margin: 4%;
   text-align: center;
   font-size: 2rem;
   font-weight: 10;
   top: 0;
+  filter: drop-shadow(2px 2px 1px var(--dark-violet));
 }
 
 .timeline {
@@ -297,6 +311,10 @@ h1 {
 
 .button-52.whiteButton:after {
 	background-color: #fff;
+}
+
+.button-52.transButton:after {
+	background: linear-gradient(to right, var(--blue-trans) , var(--pink-trans), #ffffff, var(--pink-trans), var(--blue-trans) );
 }
 
 @media (min-width: 768px) {
