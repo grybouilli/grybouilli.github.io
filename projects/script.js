@@ -1,11 +1,12 @@
 var types_map = {
     "scholar": "timeline__event--type1",
     "personal": "timeline__event--type2",
-    "professional": "timeline__event--type3"
+    "professional": "timeline__event--type3",
+    "associative": "timeline__event--type4"
 };
 
 function showItem(classId) {
-    var x = document.querySelectorAll("."+types_map["scholar"]+",."+types_map["personal"]+",."+types_map["professional"]);
+    var x = document.querySelectorAll("."+types_map["scholar"]+",."+types_map["personal"]+",."+types_map["professional"]+",."+types_map["associative"]);
     for (var i = 0; i < x.length; i++) {
         if(x[i].className.includes(types_map[classId]))
         {
@@ -18,7 +19,7 @@ function showItem(classId) {
 
 function showAll()
 {
-    var x = document.querySelectorAll("."+types_map["scholar"]+",."+types_map["personal"]+",."+types_map["professional"]);
+    var x = document.querySelectorAll("."+types_map["scholar"]+",."+types_map["personal"]+",."+types_map["professional"]+",."+types_map["associative"]);
     for (var i = 0; i < x.length; i++) {
         x[i].style.display = "flex";
     }

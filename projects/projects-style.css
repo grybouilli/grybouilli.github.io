@@ -9,7 +9,8 @@
 	--main-bg-color: #5E548E;
 	--blue-trans: #BBD0FF;
 	--pink-trans: #FFD6FF;
-	--dark-violet: #231942
+    --light-violet : #C8B6FF;
+	--dark-violet: #231942;
 }
 
 html {
@@ -216,6 +217,27 @@ h2 {
 .timeline__event--type3 .timeline__event__title {
   color: #F8F2FF;
 }
+
+.timeline__event--type4:after {
+    background: var(--light-violet);
+  }
+  .timeline__event--type4 .timeline__event__date {
+    color: #231942;
+    background-color: var(--light-violet);
+  }
+  .timeline__event--type4:nth-child(2n+1) .timeline__event__icon:before, .timeline__event--type4:nth-child(2n+1) .timeline__event__icon:after {
+    background: var(--light-violet);
+  }
+  .timeline__event--type4 .timeline__event__icon {
+    background: var(--light-violet);
+    color: var(--light-violet);
+  }
+  .timeline__event--type4 .timeline__event__icon:before, .timeline__event--type4 .timeline__event__icon:after {
+    background: var(--light-violet);
+  }
+  .timeline__event--type4 .timeline__event__title {
+    color: var(--light-violet);
+  }
 .timeline__event:last-child .timeline__event__icon:before {
   content: none;
 }
@@ -273,7 +295,7 @@ h2 {
 /* CSS */
 .button-52 {
 	font-family: "lgc";
-	font-size: 16px;
+	font-size: 20px;
 	font-weight: 200;
 	letter-spacing: 1px;
 	padding: 13px 20px 13px;
@@ -311,6 +333,10 @@ h2 {
 
 .button-52.whiteButton:after {
 	background-color: #fff;
+}
+
+.button-52.violetButton:after {
+	background-color: var(--light-violet);
 }
 
 .button-52.transButton:after {
