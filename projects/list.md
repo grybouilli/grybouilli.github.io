@@ -1,7 +1,6 @@
 * Scholar <br>
 $\quad$    [$\quad$] [Maker's project (Arduino, C/C++, Onshape)](https://www.eirlab.net/2023/03/02/marble-machine/) ; <br>
 $\quad$    [$\quad$] [Connected aquariums (C/C++, SFML)](https://github.com/iPazu/AquariumNetwork) ; <br>
-$\quad$    [$\quad$] [Game of Life (C, SDL)](nopage.com) ; <br>
 
 * Personal <br>
 $\quad$    [$\quad$] [Genetic drift simulation (C++, SFML)](https://github.com/grybouilli/Genetic_Drift_Simulation) ; <br>
