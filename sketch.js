@@ -6,7 +6,7 @@ let imageHeight;
 let imageWidth;
 
 function preload() {
-	imageHeight = 200;
+	imageHeight = 225;
 	imageWidth = imageHeight;
 	selfy_photo = new Selfy(0, 0, imageWidth, imageHeight, 'images/selfy_no_eye.png');
 	selfy_photo.loadJSON('/images/selfy.json');
