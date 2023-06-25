@@ -15,151 +15,170 @@
     <link rel="stylesheet" href="../style.css">
     <style>
         .highlight-blue:before,
-  .highlight-white:before,
-  .highlight-pink:before {
-      content: "";
-      position: absolute;
-      width: calc(100% + 4px);
-      height: 95%;
-      left: -2px;
-      bottom: 0;
-      z-index: 0;
-      transform: rotate(-2deg);
-  }
+        .highlight-white:before,
+        .highlight-pink:before {
+            content: "";
+            position: absolute;
+            width: calc(100% + 4px);
+            height: 95%;
+            left: -2px;
+            bottom: 0;
+            z-index: 0;
+            transform: rotate(-2deg);
+        }
     </style>
 
 
 
-<script src="https://kit.fontawesome.com/fc596df623.js" crossorigin="anonymous"></script>
-<div class='back-to-menu-container'>
-    <ol>
-        <a class='animated-arrow' href='../' style="background: transparent; border-bottom: 0px solid;">
-          <span class='the-arrow -left'>
-            <span class='shaft'></span>
-          </span>
-          <span class='main'>
-            <span class='the-arrow -right'>
-              <span class='shaft'></span>
-            </span>
-            <span class='text'>
-              Back to main page
-            </span>
-          </span>
-        </a>
+    <!-- <script src="https://kit.fontawesome.com/fc596df623.js" crossorigin="anonymous"></script> -->
+    <div class='back-to-menu-container'>
+        <ol>
+            <a class='animated-arrow' href='../' style="background: transparent; border-bottom: 0px solid;">
+                <span class='the-arrow -left'>
+                    <span class='shaft'></span>
+                </span>
+                <span class='main'>
+                    <span class='the-arrow -right'>
+                        <span class='shaft'></span>
+                    </span>
+                    <span class='text'>
+                        Back to main page
+                    </span>
+                </span>
+            </a>
+        </ol>
     </div>
-</ol>
-  </div>
 
-<h1>
-    <div class="trans-text-head">
-        <p>My Projects</p> 
+    <h1>
+        <div class="trans-text-head">
+            <p>My Projects</p>
+        </div>
+    </h1>
+    <div class="container-block">
+        <h2>Click on a project's title to know more about it !</h2>
     </div>
-</h1>
-<h2>Click on a project's title to know more about it !</h2>
 
-<div style="display: flex; justify-content: center;">
-    <script src="script.js" async></script>
-    <ol style="position: relative; left:-20px">
-        <button class="button-52 transButton" role="button" onclick="showAll()">All projects</button>
-    </ol>
-</div>
-<div style="display: flex; justify-content: center;">
-    <script src="script.js" async></script>
-    <ol style="position: relative; left:-0px">
-        <button class="button-52 blueButton" role="button" onclick="showItem('scholar')">Scholar</button>
-        <button class="button-52" role="button"  onclick="showItem('personal')">Personal</button>
-        <button class="button-52 whiteButton" role="button"  onclick="showItem('professional')">Professional</button>
-        <button class="button-52 violetButton" role="button"  onclick="showItem('associative')">Associative</button>
-    </ol>
-</div>
+    <div style="display: flex; justify-content: center;">
+        <script src="script.js" async></script>
+        <ol style="position: relative; left:-20px">
+            <button class="button-52 transButton" role="button" onclick="showAll()">All projects</button>
+        </ol>
+    </div>
+    <div style="display: flex; justify-content: center;">
+        <script src="script.js" async></script>
+        <ol style="position: relative; left:-0px">
+            <button class="button-52 blueButton" role="button" onclick="showItem('scholar')">Scholar</button>
+            <button class="button-52" role="button" onclick="showItem('personal')">Personal</button>
+            <button class="button-52 whiteButton" role="button" onclick="showItem('professional')">Professional</button>
+            <button class="button-52 violetButton" role="button" onclick="showItem('associative')">Associative</button>
+        </ol>
+    </div>
 
 
 
 
-<div class="timeline">
+    <div class="timeline">
 
-    <!-- GENETIC DRIFT -->
-	<div class="timeline__event animated fadeInUp delay-2s timeline__event--type2">
-		<div class="timeline__event__icon">
-			<!-- <i class="lni-sport"></i>-->
+        <!-- GENETIC DRIFT -->
+        <div class="timeline__event animated fadeInUp delay-2s timeline__event--type2">
+            <div class="timeline__event__icon">
+                <!-- <i class="lni-sport"></i>-->
 
-		</div>
-		<div class="timeline__event__date">
-			December 2018
-		</div>
-		<div class="timeline__event__content">
-			<div class="timeline__event__title">
-                <a href="#" target="_blank" rel="noopener noreferrer" style="color:var(--pink-trans)">Genetic Drift Simulation</a>	
-			</div>
-			<div class="timeline__event__description">
-				<p>One of my first large personal project. Inspired by biology class in highschool, it is a vizualisation of the effect of genetic drift on elephants and their tusks. The project is fully written in <span class="highlight-white"><span class="highlight">C++</span></span> and features the use of the <span class="highlight-white"><span class="highlight">SFML library</span></span>.</p>
-			</div>
-		</div>
-	</div>
+            </div>
+            <div class="timeline__event__date">
+                December 2018
+            </div>
+            <div class="timeline__event__content">
+                <div class="timeline__event__title">
+                    <a href="genetic_drift"
+                        style="color:var(--pink-trans)">Genetic Drift Simulation</a>
+                </div>
+                <div class="timeline__event__description">
+                    <p>One of my first large personal project. Inspired by biology class in highschool, it is a
+                        vizualisation of the effect of genetic drift on elephants and their tusks. The project is fully
+                        written in <span class="highlight-white"><span class="highlight">C++</span></span> and features
+                        the use of the <span class="highlight-white"><span class="highlight">SFML library</span></span>.
+                    </p>
+                </div>
+            </div>
+        </div>
 
-    <!-- SMALL PLATFORM GAME PHYSICS -->
-	<div class="timeline__event animated fadeInUp delay-2s timeline__event--type2">
-		<div class="timeline__event__icon">
-			<!-- <i class="lni-sport"></i>-->
+        <!-- SMALL PLATFORM GAME PHYSICS -->
+        <div class="timeline__event animated fadeInUp delay-2s timeline__event--type2">
+            <div class="timeline__event__icon">
+                <!-- <i class="lni-sport"></i>-->
 
-		</div>
-		<div class="timeline__event__date">
-			March 2019
-		</div>
-		<div class="timeline__event__content">
-			<div class="timeline__event__title">
-                <a href="#" target="_blank" rel="noopener noreferrer" style="color:var(--pink-trans)">Small Platform Game Physics</a>	
-			</div>
-			<div class="timeline__event__description">
-				<p>A minimal <span class="highlight-white"><span class="highlight">platform game physics</span></span> implementation. The project is fully written in <span class="highlight-white"><span class="highlight">C++</span></span> and features the use of the <span class="highlight-white"><span class="highlight">SFML library</span></span>.</p>
-			</div>
-		</div>
-	</div>
+            </div>
+            <div class="timeline__event__date">
+                March 2019
+            </div>
+            <div class="timeline__event__content">
+                <div class="timeline__event__title">
+                    <a href="#" style="color:var(--pink-trans)">Small Platform
+                        Game Physics</a>
+                </div>
+                <div class="timeline__event__description">
+                    <p>A minimal <span class="highlight-white"><span class="highlight">platform game
+                                physics</span></span> implementation. The project is fully written in <span
+                            class="highlight-white"><span class="highlight">C++</span></span> and features the use of
+                        the <span class="highlight-white"><span class="highlight">SFML library</span></span>.</p>
+                </div>
+            </div>
+        </div>
 
-    <!-- MAKERS PROJECT -->
-	<div class="timeline__event  animated fadeInUp delay-3s timeline__event--type1">
-		<div class="timeline__event__icon ">
-			<!-- <i class="lni-sport"></i>-->
-		</div>
-		<div class="timeline__event__date">
-			March - May 2023
-		</div>
-		<div class="timeline__event__content ">
-			<div class="timeline__event__title">
-                <a href="https://www.eirlab.net/2023/03/02/marble-machine/" target="_blank" rel="noopener noreferrer">Maker's Marble Machine </a>	
-			</div>
-			<div class="timeline__event__description">
-				<p>A project conducted during an introductory course on <span class="highlight-pink"><span class="highlight">Maker Culture</span></span>. The project mainly features <span class="highlight-pink"><span class="highlight">Arduino</span></span> programming and <span class="highlight-pink"><span class="highlight">modeling</span></span> on <a href="https://www.onshape.com/">onshape</a>. </p>
-			</div>
-		</div>
-	</div>
+        <!-- MAKERS PROJECT -->
+        <div class="timeline__event  animated fadeInUp delay-3s timeline__event--type1">
+            <div class="timeline__event__icon ">
+                <!-- <i class="lni-sport"></i>-->
+            </div>
+            <div class="timeline__event__date">
+                March - May 2023
+            </div>
+            <div class="timeline__event__content ">
+                <div class="timeline__event__title">
+                    <a href="https://www.eirlab.net/2023/03/02/marble-machine/" target="_blank"
+                        rel="noopener noreferrer">Maker's Marble Machine </a>
+                </div>
+                <div class="timeline__event__description">
+                    <p>A project conducted during an introductory course on <span class="highlight-pink"><span
+                                class="highlight">Maker Culture</span></span>. The project mainly features <span
+                            class="highlight-pink"><span class="highlight">Arduino</span></span> programming and <span
+                            class="highlight-pink"><span class="highlight">modeling</span></span> on <a
+                            href="https://www.onshape.com/">onshape</a>. </p>
+                </div>
+            </div>
+        </div>
 
 
 
-	<!--second-->
-    <!-- AQUARIUM NETWORK -->
-	<div class="timeline__event animated fadeInUp delay-2s timeline__event--type1">
-		<div class="timeline__event__icon">
-			<!-- <i class="lni-sport"></i>-->
+        <!--second-->
+        <!-- AQUARIUM NETWORK -->
+        <div class="timeline__event animated fadeInUp delay-2s timeline__event--type1">
+            <div class="timeline__event__icon">
+                <!-- <i class="lni-sport"></i>-->
 
-		</div>
-		<div class="timeline__event__date">
-			March - May 2023
-		</div>
-		<div class="timeline__event__content">
-			<div class="timeline__event__title">
-                <a href="#" target="_blank" rel="noopener noreferrer" style="color:var(--blue-trans)">Aquarium Network</a>	
-			</div>
-			<div class="timeline__event__description">
-				<p>Network project with both server and GUI client implementation for connected aquariums. The project is fully written in <span class="highlight-pink"><span class="highlight">C/C++</span></span> and features the use of the <span class="highlight-pink"><span class="highlight">SFML library</span></span>.</p>
-			</div>
-		</div>
-	</div>
+            </div>
+            <div class="timeline__event__date">
+                March - May 2023
+            </div>
+            <div class="timeline__event__content">
+                <div class="timeline__event__title">
+                    <a href="#" style="color:var(--blue-trans)">Aquarium
+                        Network</a>
+                </div>
+                <div class="timeline__event__description">
+                    <p>Network project with both server and GUI client implementation for connected aquariums. The
+                        project is fully written in <span class="highlight-pink"><span
+                                class="highlight">C/C++</span></span> and features the use of the <span
+                            class="highlight-pink"><span class="highlight">SFML library</span></span>.</p>
+                </div>
+            </div>
+        </div>
 
-	<!--third-->
-    
+        <!--third-->
 
-</div>
+
+    </div>
 
 </body>
 
