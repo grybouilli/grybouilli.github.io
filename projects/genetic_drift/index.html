@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Genetic Drift Simulation</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+
+    <style>
+        .trans-text-head {
+            filter: drop-shadow(2px 2px 1px var(--dark-violet));
+            background: linear-gradient(to right, var(--blue-trans) 35%, var(--pink-trans), #ffffff, var(--pink-trans), var(--blue-trans) 65%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        body {
+            font-size: 2rem;
+        }
+
+        .box-container {
+            display: flex;
+            margin: 1rem;
+            padding: 1rem;
+        }
+
+        .inner-box-container {
+            margin: 1rem;
+            padding: 1rem;
+            filter: drop-shadow(2px 2px 0px var(--dark-violet));
+        }
+
+        .animated-arrow:hover>.the-arrow.-left>.shaft {
+            transform: translateX(85px);
+        }
+
+        .zoom-gif {
+            transition: all 0.5s;
+            filter: drop-shadow(4px 4px 3px var(--dark-violet));
+        }
+
+        .zoom-gif:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(8px 8px 6px var(--dark-violet));
+        }
+
+        .highlight-pink:before {
+            height: 95%;
+            transform: rotate(-.75deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class='back-to-menu-container'>
+        <ol>
+            <a class='animated-arrow' href='../' style="background: transparent; border-bottom: 0px solid;">
+                <span class='the-arrow -left'>
+                    <span class='shaft'></span>
+                </span>
+                <span class='main'>
+                    <span class='the-arrow -right'>
+                        <span class='shaft'></span>
+                    </span>
+                    <span class='text'>
+                        Back to projects page
+                    </span>
+                </span>
+            </a>
+        </ol>
+    </div>
+    <h1>
+        <div class="trans-text-head">
+            <p>Genetic Drift Simulation</p>
+        </div>
+    </h1>
+
+    <div class="container-block">
+        <h2>A visual simulation of genetric drift and its effect on elephants' tusks</h2>
+    </div>
+
+    <div class="box-container">
+        <div class="inner-box-container zoom-gif">
+            <a href="https://github.com/grybouilli/Genetic_Drift_Simulation" target="_blank" rel="noopener noreferrer"
+                style="background: transparent; border-bottom: 0px solid;">
+                <img src="genetic_drift_sim.gif" width="640px" style="" />
+            </a>
+        </div>
+        <div class="inner-box-container" style="font-size: 2rem; justify-content: left;
+        align-items: left;">
+            <h2 style="text-align: left; margin: 0%;"><span class="highlight-pink"><span class="highlight">Where are the
+                        tusks? </span></span></h2>
+            <p>
+                I did this project back in my senior year, when I was teaching myself C++ and SFML. <br>
+                The simulation aims to observe the evolution of a randomly generated population of elephants, some with
+                tusks, some without. When male and female meet, they may reproduce ; depending on your simulation, you
+                may end up with a population of elephants with higher amount of tusked individuals or the other way
+                around.
+
+            <div class="container-block">
+                <span class="highlight-pink"><span class="highlight">Click on the image to have a look at the code
+                        !</span></span>
+            </div>
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -28,10 +28,10 @@
 }
 
 .container-block {
-	filter: drop-shadow(1px 1px 1px var(--dark-violet));
+	filter: drop-shadow(2px 2px 1px var(--dark-violet));
 	font-family: "lgc";
 	font-size: 1.9rem;
-	padding: 2em;
+	/* padding: 2em; */
 	text-align: center;
 	color: var(--blue-trans)
 }
@@ -63,7 +63,7 @@
   }
   
   .trans-text-head {
-      filter: drop-shadow(2px 2px 1px var(--dark-violet));
+      filter: drop-shadow(3px 3px 1px var(--dark-violet));
       background: linear-gradient(to right, var(--blue-trans) 45%, var(--pink-trans), #ffffff, var(--pink-trans), var(--blue-trans) 55%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -79,7 +79,7 @@
   
   h1:hover {
       font-variation-settings: "wght" 582;
-      letter-spacing: 3px;
+      letter-spacing: 5px;
   }
   
   h2 {
@@ -88,7 +88,7 @@
     font-size: 3rem;
     font-weight: 10;
     top: 0;
-    filter: drop-shadow(2px 2px 1px var(--dark-violet));
+    filter: drop-shadow(1px 1px 1px var(--dark-violet));
   }
   
   .timeline {
