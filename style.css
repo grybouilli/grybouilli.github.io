@@ -64,7 +64,7 @@
   
   .trans-text-head {
       filter: drop-shadow(3px 3px 1px var(--dark-violet));
-      background: linear-gradient(to right, var(--blue-trans) 45%, var(--pink-trans), #ffffff, var(--pink-trans), var(--blue-trans) 55%);
+      background: linear-gradient(to right, var(--blue-trans) 40%, var(--pink-trans), #ffffff, var(--pink-trans), var(--blue-trans) 60%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
   }
