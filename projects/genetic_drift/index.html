@@ -65,22 +65,20 @@
             z-index: 0;
         }
 
-        .over-gif-text
-        {
+        .over-gif-text {
             display: none;
             position: absolute;
             top: 160px;
             left: 260px;
             z-index: 2;
             transition: all .5s;
-            color : var(--dark-violet);
+            color: var(--dark-violet);
         }
 
         .zoom-gif:hover>.over-gif-text {
             display: flex;
             animation: fadeIn 0.5s;
-            color : var(--dark-violet)
-
+            color: var(--dark-violet)
         }
 
         .highlight-pink:before {
@@ -88,21 +86,6 @@
             transform: rotate(-.75deg);
         }
 
-        a{
-            color: var(--dark-violet);
-            transition: all .1s;
-
-        }
-        a:visited {
-            color: var(--dark-violet);
-        }
-
-        a:hover {
-            color: var(--light-violet);
-            background: transparent;
-            border-bottom: 0px solid;
-            filter: drop-shadow(2px 2px 0px var(--dark-violet));
-        }
     </style>
 </head>
 
@@ -110,7 +93,8 @@
 
     <div class='back-to-menu-container'>
         <ol>
-            <a class='animated-arrow' href='../' style="background: transparent; border-bottom: 0px solid;">
+            <a class='animated-arrow' href='../'
+                style="background: transparent; border-bottom: 0px solid;">
                 <span class='the-arrow -left'>
                     <span class='shaft'></span>
                 </span>
@@ -140,11 +124,11 @@
             <div class="zoom-gif">
                 <img src="genetic_drift_sim.gif" width="640px" />
                 <div class="over-gif-text">
-                <a href="https://github.com/grybouilli/Genetic_Drift_Simulation" target="_blank"
-                    rel="noopener noreferrer">
+                    <a href="https://github.com/grybouilli/Genetic_Drift_Simulation" target="_blank"
+                        rel="noopener noreferrer" style="color: var(--dark-violet); background: transparent;">
                         Go to github
-                    </div>
                 </div>
+            </div>
             </a>
         </div>
         <div class="inner-box-container" style="font-size: 2rem; justify-content: left;
