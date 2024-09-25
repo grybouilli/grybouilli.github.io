@@ -1,0 +1,60 @@
+.animated-arrow:hover>.the-arrow.-left>.shaft {
+    transform: translateX(105px);
+}
+
+
+.box-container {
+    display: flex;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.inner-box-container {
+    margin: 1rem;
+    padding: 1rem;
+    filter: drop-shadow(2px 2px 0px var(--dark-violet));
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.zoom-gif {
+    transition: all 0.5s;
+    filter: drop-shadow(4px 4px 3px var(--dark-violet));
+    z-index: 0;
+
+}
+
+.zoom-gif:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(8px 8px 6px var(--dark-violet));
+    z-index: 0;
+}
+
+.over-gif-text {
+    display: none;
+    position: absolute;
+    top: 160px;
+    left: 260px;
+    z-index: 2;
+    transition: all .5s;
+    color: var(--dark-violet);
+}
+
+.zoom-gif:hover>.over-gif-text {
+    display: flex;
+    animation: fadeIn 0.5s;
+    color: var(--dark-violet)
+}
+
+.highlight-pink:before {
+    height: 95%;
+    transform: rotate(-.75deg);
+}

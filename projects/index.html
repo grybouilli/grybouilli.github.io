@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <script src="../../back_to_menu.js"></script>
     <title>NG's Projects</title>
 
 
@@ -31,23 +32,9 @@
 
 
     <!-- <script src="https://kit.fontawesome.com/fc596df623.js" crossorigin="anonymous"></script> -->
-    <div class='back-to-menu-container'>
-        <ol>
-            <a class='animated-arrow' href='../' style="background: transparent; border-bottom: 0px solid;">
-                <span class='the-arrow -left'>
-                    <span class='shaft'></span>
-                </span>
-                <span class='main'>
-                    <span class='the-arrow -right'>
-                        <span class='shaft'></span>
-                    </span>
-                    <span class='text'>
-                        Back to main page
-                    </span>
-                </span>
-            </a>
-        </ol>
-    </div>
+    <script>
+        document.write(getBackToMenu('../', 'Back to home page', 20));
+    </script>
 
     <h1>
         <div class="trans-text-head">
@@ -171,6 +158,27 @@
                         project is fully written in <span class="highlight-pink"><span
                                 class="highlight">C/C++</span></span> and features the use of the <span
                             class="highlight-pink"><span class="highlight">SFML library</span></span>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ossia Score ParametrEQ -->
+        <div class="timeline__event animated fadeInUp delay-2s timeline__event--type3">
+            <div class="timeline__event__icon">
+                <!-- <i class="lni-sport"></i>-->
+
+            </div>
+            <div class="timeline__event__date">
+                June 2022
+            </div>
+            <div class="timeline__event__content">
+                <div class="timeline__event__title">
+                    <a href="parametreq" style="color:#ffffff">Ossia Score Parametr-EQ</a>
+                </div>
+                <div class="timeline__event__description">
+                    <p>A parametric EQ for the <span class="highlight-pink"><span
+                        class="highlight">open source</span></span> intermedia sequencer Ossia Score. Written using <span class="highlight-pink"><span
+                                class="highlight">C++20</span></span>.</p>
                 </div>
             </div>
         </div>

@@ -12,6 +12,9 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script src="../../back_to_menu.js"></script>
+    <script src="../project_presentation.js"></script>
 
     <style>
 
@@ -19,89 +22,17 @@
             font-size: 2rem;
         }
 
-        .box-container {
-            display: flex;
-            margin: 1rem;
-            padding: 1rem;
-        }
-
-        .inner-box-container {
-            margin: 1rem;
-            padding: 1rem;
-            filter: drop-shadow(2px 2px 0px var(--dark-violet));
-        }
-
-        .animated-arrow:hover>.the-arrow.-left>.shaft {
-            transform: translateX(85px);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .zoom-gif {
-            transition: all 0.5s;
-            filter: drop-shadow(4px 4px 3px var(--dark-violet));
-            z-index: 0;
-
-        }
-
-        .zoom-gif:hover {
-            transform: scale(1.1);
-            filter: drop-shadow(8px 8px 6px var(--dark-violet));
-            z-index: 0;
-        }
-
-        .over-gif-text {
-            display: none;
-            position: absolute;
-            top: 160px;
-            left: 260px;
-            z-index: 2;
-            transition: all .5s;
-            color: var(--dark-violet);
-        }
-
-        .zoom-gif:hover>.over-gif-text {
-            display: flex;
-            animation: fadeIn 0.5s;
-            color: var(--dark-violet)
-        }
-
-        .highlight-pink:before {
-            height: 95%;
-            transform: rotate(-.75deg);
-        }
 
     </style>
 </head>
 
 <body>
 
-    <div class='back-to-menu-container'>
-        <ol>
-            <a class='animated-arrow' href='../'
-                style="background: transparent; border-bottom: 0px solid;">
-                <span class='the-arrow -left'>
-                    <span class='shaft'></span>
-                </span>
-                <span class='main'>
-                    <span class='the-arrow -right'>
-                        <span class='shaft'></span>
-                    </span>
-                    <span class='text'>
-                        Back to projects page
-                    </span>
-                </span>
-            </a>
-        </ol>
-    </div>
+    <script>
+        document.write(getBackToMenu('../../', 'Back to home page'));
+        document.write(getBackToMenu('../', 'Back to projects page'));
+    </script>
+
     <h1>
         <div class="trans-text-head">
             <p>Genetic Drift Simulation</p>
@@ -112,36 +43,9 @@
         <h2>A visual simulation of genetric drift and its effect on elephants' tusks</h2>
     </div>
 
-    <div class="box-container">
-        <div class="inner-box-container">
-            <div class="zoom-gif">
-                <img src="genetic_drift_sim.gif" width="640px" />
-                <div class="over-gif-text">
-                    <a href="https://github.com/grybouilli/Genetic_Drift_Simulation" target="_blank"
-                        rel="noopener noreferrer" style="color: var(--dark-violet); background: transparent;">
-                        Go to github
-                </div>
-            </div>
-            </a>
-        </div>
-        <div class="inner-box-container" style="font-size: 2rem; justify-content: left;
-        align-items: left;">
-            <h2 style="text-align: left; margin: 0%;"><span class="highlight-pink"><span class="highlight">Where are the
-                        tusks? </span></span></h2>
-            <p>
-                I did this project back in my senior year, when I was teaching myself C++ and SFML. <br>
-                The simulation aims to observe the evolution of a randomly generated population of elephants, some with
-                tusks, some without. When male and female meet, they may reproduce ; depending on your simulation, you
-                may end up with a population of elephants with higher amount of tusked individuals or the other way
-                around.
-
-            <div class="container-block">
-                <span class="highlight-pink"><span class="highlight">Click on the image to have a look at the code
-                        !</span></span>
-            </div>
-            </p>
-        </div>
-    </div>
+    <script>
+        document.write(insertProjectPresentation("genetic_drift_sim.gif", "https://github.com/grybouilli/Genetic_Drift_Simulation", "Where are the tusks ?", "I did this project back in my senior year, when I was teaching myself C++ and SFML. <br> The simulation aims to observe the evolution of a randomly generated population of elephants, some with tusks, some without. When male and female meet, they may reproduce ; depending on your simulation, you may end up with a population of elephants with higher amount of tusked individuals or the other way around."));
+    </script>
 
 </body>
 
