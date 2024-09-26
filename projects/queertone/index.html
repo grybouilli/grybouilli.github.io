@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Queertone</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script src="../../back_to_menu.js"></script>
+    <script src="../project_presentation.js"></script>
+
+    <style>
+
+        body {
+            font-size: 2rem;
+        }
+
+    </style>
+</head>
+
+<body>
+    <script>
+        document.write(getBackToMenu('../../', 'Back to home page'));
+        document.write(getBackToMenu('../', 'Back to projects page'));
+    </script>
+    <h1>
+        <div class="trans-text-head">
+            <p>Queertone</p>
+        </div>
+    </h1>
+
+    <div class="container-block">
+        <h2>A set of research work to use Pytorch models in PureData.</h2>
+    </div>
+
+    <script>
+        document.write(insertProjectPresentation("demo.gif", "https://github.com/grybouilli/queertone/", "Play some code in PureData", "This work is related to the project \"VAE Synth for Ossia\". Initially, the goal was to try to run some python code inside PureData which would in turn be embedded inside Ossia Score.<br> This repo relies heavily on the use of py/pyext, a Pd external. My work consisted in reviving and fixing the library. The GIF you're seeing is an <span class=\"highlight-pink\"><span class=\"highlight\"><a href=\"https://github.com/grybouilli/latent-vector-synthesis/tree/main/pdpyext\" style=\"color:var(--dark-violet)\">adaptation</a></span></span> of <span class=\"highlight-pink\"><span class=\"highlight\"><a href=\"https://github.com/david-hogberg/latent-vector-synthesis\" style=\"color:var(--dark-violet)\">David Hogberg's Latent Vector Synthesis</a></span></span> using py/pyext to run the Python back-end."));
+    </script>
+
+</body>
+
+</html>

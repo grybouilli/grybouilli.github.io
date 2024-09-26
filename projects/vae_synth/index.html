@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VAE Synth</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script src="../../back_to_menu.js"></script>
+    <script src="../project_presentation.js"></script>
+
+    <style>
+
+        body {
+            font-size: 2rem;
+        }
+
+    </style>
+</head>
+
+<body>
+    <script>
+        document.write(getBackToMenu('../../', 'Back to home page'));
+        document.write(getBackToMenu('../', 'Back to projects page'));
+    </script>
+    <h1>
+        <div class="trans-text-head">
+            <p>VAE Synth for Ossia Score</p>
+        </div>
+    </h1>
+
+    <div class="container-block">
+        <h2>A Pytorch based Variational Auto-Encoder for Ossia Score.</h2>
+    </div>
+
+    <script>
+        document.write(insertProjectPresentation("demo2.gif", "https://github.com/grybouilli/VAE_Synth/tree/master", "Make some sound !", "This work was conducted during my 2023 Summer Internship, under the supervision of Kivanç Tatar. The goal was to generate sound using ML Pytorch models in Ossia Score. After the work conducted on <span class=\"highlight-pink\"><span class=\"highlight\"><a href=\"../queertone\" style=\"color:var(--dark-violet)\">Queertone</a></span></span>, I started looking into an Ossia Score specific solution.<br> I developed an object which allows running Python code in two steps : the loading part and the running part. The heavy and loading work should be done in the loading part and the sound synthesis should be put in the running part. This solution isn't Pytorch specific, one can generate sound with math-based methods. <br> To make it more accessible, I created a Docker image: you can find guidelines on how to use it <span class=\"highlight-pink\"><span class=\"highlight\"><a href=\"https://github.com/grybouilli/docker-for-ossia/tree/master\" style=\"color:var(--dark-violet)\">here</a></span></span>."));
+    </script>
+
+</body>
+
+</html>
