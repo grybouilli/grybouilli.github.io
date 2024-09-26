@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Spinning Display</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script src="../../back_to_menu.js"></script>
+    <script src="../project_presentation.js"></script>
+
+    <style>
+
+        body {
+            font-size: 2rem;
+        }
+
+    </style>
+</head>
+
+<body>
+    <script>
+        document.write(getBackToMenu('../../', 'Back to home page'));
+        document.write(getBackToMenu('../', 'Back to projects page'));
+    </script>
+    <h1>
+        <div class="trans-text-head">
+            <p>Spinning Display</p>
+        </div>
+    </h1>
+
+    <div class="container-block">
+        <h2>An implementation for a Persistence of Vision effect on the Atmega 328p.</h2>
+    </div>
+
+    <script>
+        document.write(insertProjectPresentation("demo_final.gif", "https://github.com/grybouilli/spinning-display", "You Spin Me Round (Like a Record)", "This is a scholar project. Three main goals were set : to display an analog clock, to display images and to display a digital clock. More details about the expectations <span class=\"highlight-pink\"><span class=\"highlight\"><a href=\"https://gregwar.com/embedded_system/project.html\" style=\"color:var(--dark-violet)\">here</a></span></span>.<br> Our team of three managed to implement all three solutions. For image display, the images bytes are sent using bluetooth. For the digital clock, the image display solution cna be used, or, one can flash a program with hard coded digits images."));
+    </script>
+
+</body>
+
+</html>
