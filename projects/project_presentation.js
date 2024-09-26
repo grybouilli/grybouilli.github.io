@@ -4,7 +4,7 @@ function insertProjectPresentation(img, projectUrl, projectSubtitle, projectDesc
     <div class="box-container">
         <div class="inner-box-container">
             <div class="zoom-gif">
-                <img src="${img}" width="640px" />
+                <img src="${img}" width="600px" />
                 <div class="over-gif-text">
                     <a href="${projectUrl}" target="_blank"
                         rel="noopener noreferrer" style="color: var(--light-violet); background: transparent;">
