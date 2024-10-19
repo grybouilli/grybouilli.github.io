@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Multi-voice Sound Generation with Arduino</title>
+    <link rel="stylesheet" type="text/css" href="../posts_style.css" />
+    <link rel="stylesheet" type="text/css" href="../syntax-highlight.css" />
+        <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
+    ></script>
+        <base target="_blank" rel="noopener noreferrer">
+  </head>
+
+  <header id="title-block-header">
+    <h1 class="trans-text-head">Multi-voice Sound Generation with
+Arduino</h1>
+    <p class="author"></p>
+  </header>
+  <body>
+    <div id="TOC">
+      <span class="highlight"> <ul>
+<li><a href="#multi-voice-sound-generation-with-arduino"
+id="toc-multi-voice-sound-generation-with-arduino">Multi-voice Sound
+Generation with Arduino</a>
+<ul>
+<li><a href="#foreword" id="toc-foreword">Foreword</a>
+<ul>
+<li><a href="#motivations" id="toc-motivations">Motivations</a></li>
+<li><a href="#pre-requisites"
+id="toc-pre-requisites">Pre-requisites</a></li>
+<li><a href="#the-equipment" id="toc-the-equipment">The
+equipment</a></li>
+</ul></li>
+<li><a href="#theory-on-direct-digital-synthesis-with-arduino"
+id="toc-theory-on-direct-digital-synthesis-with-arduino">Theory on
+Direct Digital Synthesis with Arduino</a>
+<ul>
+<li><a href="#from-sound-to-voltages"
+id="toc-from-sound-to-voltages">From sound to voltages</a></li>
+<li><a href="#lets-produce-sound-maybe"
+id="toc-lets-produce-sound-maybe">Let’s produce sound ! … Maybe
+?</a></li>
+<li><a href="#counting-and-generating"
+id="toc-counting-and-generating">Counting and generating</a></li>
+<li><a href="#recap" id="toc-recap">Recap’</a></li>
+</ul></li>
+<li><a href="#lets-code" id="toc-lets-code">Let’s code !</a>
+<ul>
+<li><a href="#some-scripts" id="toc-some-scripts">Some scripts</a></li>
+<li><a href="#multi-voice-signals"
+id="toc-multi-voice-signals">Multi-voice signals</a></li>
+<li><a href="#add-some-rythm" id="toc-add-some-rythm">Add some
+rythm</a></li>
+<li><a href="#some-ideas-for-the-future"
+id="toc-some-ideas-for-the-future">Some ideas for the future</a></li>
+</ul></li>
+<li><a href="#contact-contribution"
+id="toc-contact-contribution">Contact &amp; Contribution</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul></li>
+</ul> </span>
+    </div>
+    <h1 id="multi-voice-sound-generation-with-arduino">Multi-voice Sound
+    Generation with Arduino</h1>
+    <h2 id="foreword">Foreword</h2>
+    <h3 id="motivations">Motivations</h3>
+    <p>I wrote the following article because I wanted to program the
+    Arduino to produce multi-voice melody and the only resource I found
+    was <a
+    href="https://stackoverflow.com/questions/28976608/arduino-how-to-create-two-or-more-tones-simultaneously-on-a-piezo-buzzer">this
+    stackoverflow</a> Q&amp;A. Most of the resources I found were
+    incomplete or only a single-voice melody.</p>
+    <p>Now, why are <strong>you</strong> reading this? Or better, why
+    <strong>should</strong> you be reading this? Direct Digital
+    Synthesis has been around for long, sure enough there are tools out
+    there to produce sound with several tones on an Arduino. The S/O
+    link I have given does what we want; although I haven’t played
+    around with it much myself, the fantastic <a
+    href="https://sensorium.github.io/Mozzi/examples/#01.Basics">Mozzi
+    library</a> will probably do most of what this article covers, if
+    not more.</p>
+    <p>Truth be told, I like to understand things. When there is a topic
+    that I find passionating, I won’t stop trying to understand it until
+    I get to the bottom of it. So, if you’re into sound synthesis,
+    messing around with Arduino and into trying to get it all sorted out
+    in your head, this article is for you. If your only goal is to have
+    fun with some noise, you might be better off with using the already
+    implemented tools (this project’s code, the S/O one or Mozzi’s).</p>
+    <p>A little more about what this articles actually covers after the
+    pre-requisites.</p>
+    <h3 id="pre-requisites">Pre-requisites</h3>
+    <p>This article is not a start-from-scratch article. My advice is,
+    read the article as I give out resources to understand most of it
+    along the way. But keep in mind that you will have an easier time if
+    you already know about :</p>
+    <ul>
+    <li><strong>Basic <a
+    href="https://en.wikipedia.org/wiki/Digital_signal_processing">Digital
+    Sound Processing</a> theory</strong> : you should be comfortable
+    with notions of frequency, waveforms, Nyquist-Shannon criteria,
+    sampling, etc ;</li>
+    <li><strong>Basic C/C++ and Arduino coding knowledge</strong>: be
+    able to turn on and off LEDs, be comfortable with basic C/C++ code
+    ;</li>
+    <li><strong>Arduino’s timers</strong> : you should know they exist
+    and that they have several modes of operation. I won’t go into
+    details in this article, so it’s better if you already have some
+    experience with them. <a
+    href="https://docs.arduino.cc/tutorials/generic/secrets-of-arduino-pwm/">This
+    Arduino article</a> is a nice overview of the timers’ settings and
+    use. The <a
+    href="https://www.google.com/url?sa=t&amp;source=web&amp;rct=j&amp;opi=89978449&amp;url=https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf&amp;ved=2ahUKEwiyv5WH4fKIAxV4VqQEHSqtNmkQFnoECAkQAQ&amp;usg=AOvVaw1saIayRRDKrz7YCcviikuY">Atmega
+    328p datasheet</a> is of course a great reference ;</li>
+    <li><strong>Binary and hexadecimal handling</strong>: this is pure
+    conveniency.</li>
+    </ul>
+    <p>Now, before-hand, a nice two-step exercice would be to try
+    to:</p>
+    <ul>
+    <li>produce a note using the <code>digitalWrite</code> and
+    <code>delay</code> functions provided by Arduino</li>
+    <li>play a simple single-voice theme with that same technique, just
+    to ensure you are comfortable with timing and frequency
+    manipulations.</li>
+    </ul>
+    <h3 id="the-equipment">The equipment</h3>
+    <p>Here’s what you’ll need for this project :</p>
+    <ul>
+    <li>An <a
+    href="https://learn.sparkfun.com/tutorials/arduino-comparison-guide/atmega328-boards">Atmega328p
+    based</a> Arduino board and its adapted flash method (USB cable,
+    etc). I will use the Arduino Nano ;</li>
+    <li>A <strong>100nF capacitor</strong> and a resistor of about 100
+    to 1000 Ohms ;</li>
+    <li>A piezo buzzer ;</li>
+    <li>A breadboard ;</li>
+    <li>Some wires.</li>
+    </ul>
+    <p>Additionnally, an oscilloscope is a great tool for signal
+    debugging or simply enjoying the resulting product of one’s
+    work.</p>
+    <p><strong>About the Arduino board</strong>: Having an Atmega328p
+    based board is not a necessity in itself. It is however the one I
+    will be using. Once you have covered this article and are
+    comfortable with the Atmega’s timer, you’ll probably be able to port
+    the code to some other boards.</p>
+    <h2 id="theory-on-direct-digital-synthesis-with-arduino">Theory on
+    Direct Digital Synthesis with Arduino</h2>
+    <h3 id="from-sound-to-voltages">From sound to voltages</h3>
+    <h4 id="back-to-the-basics">Back to the basics</h4>
+    <p>Let’s go back to the basics for a minute. What is sound?</p>
+    <p>Sound can be defined as the <strong>propagation of a succession
+    of compressions and decompressions</strong> of a material (solid,
+    gas or liquid). The speed at which these successions progate is
+    called the <strong>frequency</strong>. The frequency determines the
+    sound’s <strong>pitch</strong>. The higher the frequency, the higher
+    the pitch.</p>
+    <p>If we play a note in its purest form, the succession of
+    compression and decompression of that note can be represented as a
+    sinewave. To play two pure notes together is to sum up those two
+    sinewaves.</p>
+    <center>
+    <img src="./Sinewaves_and_sum.svg" alt="Two sinewave graphs for A3 and E4 notes. A third graph for their sum" width="60%">
+    </center>
+    <center>
+    Figure — Sinewaves of A3 and E4 notes and their sum.
+    </center>
+    <!-- Include figure of sum of two voices -->
+    <p>Now, simply put, if we want to produce a sound modelled by a
+    sinewave on an Arduino pin, all we have to do is to make the output
+    voltage vary so as to make it produce a sine signal. Replace “Air
+    Pressure” by “Voltage” on the graphs above, and you have our goal
+    output.</p>
+    <h4 id="tweaking-the-output-voltage-with-pwm">Tweaking the output
+    voltage with PWM</h4>
+    <p>Okay so we want to output a varying voltage. Can we do that on
+    the Arduino? Yes and no.</p>
+    <p>I won’t go into length here. If you are not familiar at all with
+    PWM technic, <a
+    href="https://docs.arduino.cc/learn/microcontrollers/analog-output/">here</a>
+    is an article that explains it better than I would. Simply put, on
+    Arduino, one can only output <span class="math inline">\(0\)</span>
+    V (off) or <span class="math inline">\(5\)</span> V (on) on a
+    digital pin. But, if we turn on and off a pin really fast, the
+    perceived voltage is midway between 0 and 5 volts, because the
+    change happens so fast.</p>
+    <p>What you should remember is :</p>
+    <blockquote>
+    <p><img src="../memo.svg" width="25em"></p>
+    <p><span class="math inline">\(\quad\)</span> We talk about a PWM
+    duty cycle, that is, <em>a percentage of “on” time</em> ; the
+    <strong>final perceived voltage</strong> is the <strong>average of
+    on and off time</strong>.</p>
+    </blockquote>
+    <p>The function <code>analogWrite</code> lets us choose the
+    duty-cycle for a PWM output, and consequently outputs a voltage in
+    the range <span class="math inline">\([0, 5]\)</span> V (note that
+    this range is discrete).</p>
+    <div class="sourceCode" id="cb1"><pre
+    class="sourceCode numberSource cpp r numberLines lineAnchors"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2"></a>analogWrite<span class="op">(</span>pin<span class="op">,</span> <span class="dv">25</span><span class="op">);</span>   <span class="co">// 10% duty cycle</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>analogWrite<span class="op">(</span>pin<span class="op">,</span> <span class="dv">127</span><span class="op">);</span>  <span class="co">// 50% duty cycle</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>analogWrite<span class="op">(</span>pin<span class="op">,</span> <span class="dv">255</span><span class="op">);</span>  <span class="co">// 100% duty cycle</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a></span></code></pre></div>
+    <h3 id="lets-produce-sound-maybe">Let’s produce sound ! … Maybe
+    ?</h3>
+    <h4 id="a-first-strategy-for-melody-generation">A first strategy for
+    melody generation</h4>
+    <p>Now we know we can tweak an output voltage in the range <span
+    class="math inline">\([0,5]\)</span> V with
+    <code>analogWrite</code>. A first idea could be to sample voltage
+    values of a given melody at a frequency <span
+    class="math inline">\(f_{sample}\)</span>. Then, we could do
+    something like:</p>
+    <div class="sourceCode" id="cb2"><pre
+    class="sourceCode numberSource cpp r numberLines lineAnchors"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="dt">uint8_t</span> voltages <span class="op">[</span>NB_SAMPLES<span class="op">]</span> <span class="op">=</span> <span class="op">{</span> <span class="co">/* Pre-computed samples ... */</span><span class="op">}</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="cf">for</span><span class="op">(</span><span class="dt">uint32_t</span> sample <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> sample <span class="op">&lt;</span> NB_SAMPLES<span class="op">;</span> <span class="op">++</span>sample<span class="op">)</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>    setVoltage<span class="op">(</span>pin<span class="op">,</span> voltages<span class="op">[</span>sample<span class="op">]);</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>    delay<span class="op">(</span><span class="dv">1</span><span class="op">/</span>f_sample<span class="op">);</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="op">}</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a></span></code></pre></div>
+    <p>Now, let’s juste consider the maths here. If we take the classic
+    <span class="math inline">\(f_{sample} = 44.1\)</span>kHz, we get
+    44,100 samples per second. So for a one-second long melody, if we
+    store the voltage values in some array of <code>uint8_t</code> , we
+    already have 44.1 Kbytes of data. The Atmega 328p flash memory can
+    only hold 32 Kbytes. So… Not a good strategy.</p>
+    <h4 id="look-up-tables">Look-up tables</h4>
+    <p>That’s where DSP knowledge comes in handy. According to a certain
+    <a href="https://en.wikipedia.org/wiki/Fourier_series">Fourier</a>,
+    <strong>any sound can be approximated by a series of sinusoidal
+    components</strong> whose frequencies are those of the fundamental
+    and its harmonics. In one melody, some notes may be played multiples
+    times. That’s data redundancy. We need a way to hold only the
+    necessary data. That’s when <strong>look-up tables</strong> come in
+    handy.</p>
+    <p>A look-up table (LUT) is an array that contains samples allowing
+    for the generation of a waveform. In our case, the LUT contains
+    samples for a period-long frame of time, allowing the generation of
+    a periodical waveform (like a sinewave for example).</p>
+    <center>
+    <div width="100px">
+    <img src="./samples_lut.svg" alt="Graph of sinewave samples for a LUT">
+    </div>
+    </center>
+    <center>
+    Figure — Sinewaves samples for a LUT.
+    </center>
+    <p>From this one LUT, we can generate <strong>any note</strong>. We
+    simply need to output the values of the LUT more or less fast to
+    adjust the note frequency. To play a continuous note of period <span
+    class="math inline">\(period\)</span>, considering a
+    <code>uint8_t look_up_table[SAMPLES]</code> array, the code would
+    look like :</p>
+    <div class="sourceCode" id="cb3"><pre
+    class="sourceCode numberSource cpp r numberLines lineAnchors"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="cf">while</span><span class="op">(</span><span class="dv">1</span><span class="op">)</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">uint32_t</span> sample <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> sample <span class="op">&lt;</span> NB_SAMPLES<span class="op">;</span> <span class="op">++</span>sample<span class="op">)</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>        <span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>            analogWrite<span class="op">(</span>pin<span class="op">,</span> look_up_table<span class="op">[</span>sample<span class="op">]);</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>            delay<span class="op">(</span>period<span class="op">/</span>NB_SAMPLES<span class="op">);</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>        <span class="op">}</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="op">}</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a></span></code></pre></div>
+    <p>The delay is equal to <span
+    class="math inline">\(\frac{period}{\text{NB_SAMPLES}}\)</span>
+    because we want to go through the LUT in <span
+    class="math inline">\(period\)</span> seconds.</p>
+    <p>Now, this is getting somewhere. But how would one play two
+    continuous note? So far, we have an index walking through the LUT
+    and we delay its walk with the <code>delay</code> function so that
+    it takes a <span class="math inline">\(period\)</span> to walk
+    through the LUT. But with two different notes, we have two different
+    periods. Should we use two indexes? Two delays? And what if we want
+    to play three, or four notes? And to not play them continuously ?
+    This would get messy…</p>
+    <h3 id="counting-and-generating">Counting and generating</h3>
+    <h4 id="timers-and-pwm">Timers and PWM</h4>
+    <p>Let’s take a small break to go back to PWM. We know the theory
+    behind it and how to use it. But how does our micro processor
+    actually produces PWM? Spoiler alert : not with
+    <code>delay</code>.</p>
+    <p>PWM generation is based on <em>timers</em>. Again, <a
+    href="https://docs.arduino.cc/tutorials/generic/secrets-of-arduino-pwm/">here</a>
+    is a resource that will explain it much better than I would.</p>
+    <p>Further on, we’ll consider the following properties about timers
+    :</p>
+    <blockquote>
+    <p><img src="../memo.svg" width="25 px"></p>
+    <p><span class="math inline">\(\quad\)</span> <strong>A timer is a
+    counter</strong> that counts step by step at a given frequency <span
+    class="math inline">\(f_{cpu}\)</span>. It counts up until a top
+    value that can be configured using register <code>ICR</code>. When
+    the top value is reached, the timer <strong>overflows</strong> and
+    goes back to 0. The <strong>compare registers</strong>,
+    <code>OCRA</code> and <code>OCRB</code>, can hold a value that, when
+    reached by the timer, sets a pin output to <span
+    class="math inline">\(5\)</span> V. When the timer overflows, the
+    pin output is set back to <span class="math inline">\(0\)</span>
+    V.</p>
+    </blockquote>
+    <p>From this, we understand that calling <code>analogWrite</code> is
+    just setting a specific value in the <code>OCRA</code> or
+    <code>OCRB</code> registers.</p>
+    <p>The Atmega 328p has several timers, some are 8-bit (maximum value
+    is <span class="math inline">\(2^{8}-1=255\)</span>), some are
+    16-bit (maximum value is <span
+    class="math inline">\(2^{16}-1=65535\)</span>).</p>
+    <p>The frequency at which the timer counts depends on two parameters
+    : the micro-processor <strong>internal clock frequency</strong>
+    (<em>hardware</em>), and the <strong>prescaler</strong>
+    (<em>software</em>). The Atmega328p has <span
+    class="math inline">\(16\)</span> MHz clock frequency. <span
+    class="math inline">\(f_{cpu}\)</span> is thus defined by:</p>
+    <p><span class="math display">\[f_{cpu} =
+    \dfrac{f_{clock}}{prescaler} = \dfrac{16
+    \text{MHz}}{prescaler}\]</span></p>
+    <p>The <strong>compare registers</strong>, OCRA and OCRB, control
+    specific pins. We’ll use OCRA which controls pin 9. Again, refer to
+    the <a
+    href="https://www.google.com/url?sa=t&amp;source=web&amp;rct=j&amp;opi=89978449&amp;url=https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf&amp;ved=2ahUKEwiyv5WH4fKIAxV4VqQEHSqtNmkQFnoECAkQAQ&amp;usg=AOvVaw1saIayRRDKrz7YCcviikuY">Atmega
+    328p datasheet</a> to find this information.</p>
+    <h4 id="the-phase-accumulator">The phase accumulator</h4>
+    <p>Back to generating sound. We want to play two notes but using
+    <code>delay</code> to keep track of where to look in the LUT is
+    getting messy because two different notes have two different period.
+    So : how do we keep track of where to look in the LUT for each
+    note?</p>
+    <p>Meet the <strong>phase accumulator technic</strong>. A
+    <strong>phase accumulator (PA)</strong> is a <strong>value that
+    generates</strong> a discrete-time, <strong>discrete-valued
+    phase</strong> argument for a lookup table. It basically
+    <strong>tracks down time</strong> so that we know where to look in
+    the LUT at any time.</p>
+    <p>Now, <a
+    href="https://www.norwegiancreations.com/2022/03/digital-audio-synthesis-part-1-the-oscillator/">this
+    article</a> explains how to produce an <strong>oscillator</strong>
+    which is basically a single-voice melody, and introduces the
+    <em>phase accumulator (PA)</em>. Reading this article is almost
+    enough to accomplish our goal but it lacks the LUT knowledge exposed
+    here. Still a great resource tho, I advice you to read it as it
+    mentions important notes on sound quality.</p>
+    <p>Anyways, the article tells the following about the PA:</p>
+    <blockquote>
+    <p><img src="../quote-left-solid.svg" width ="20px"></p>
+    <p><span class="math inline">\(\quad\)</span>The <strong>PA</strong>
+    (<em>phase accumulator</em>) is made by incrementing a counter at a
+    given frequency with something called a “Frequency Control
+    Word”.</p>
+    <p>It’s always incremented at the same time-interval (period), but
+    it is the “Frequency Control Word” that decides the
+    output-frequency.</p>
+    <p>[…] when the phase accumulator reaches its top value, it wraps
+    down to 0.”</p>
+    </blockquote>
+    <p>Here, the bigger brains will have understood why we explained the
+    timer theory just before that. We are going to use the timers
+    coupled with a phase accumulator to keep up on where to look in the
+    LUT.</p>
+    <p>The article mentions a sort of overflow for the phase
+    accumulator. To make it easier, we’ll often choose the maximum value
+    for the PA to be the maximum value that can be stored in the type of
+    variable used to store the PA. So for example, if we choose to store
+    the PA in a <code>uint16_t</code>, its maximum value is 65535.</p>
+    <p>Now, the article mentions <strong>Frequency Control
+    Word</strong>, also known as the <strong>Tuning Word</strong>. One
+    thing that many articles like the one I mentionned do, is give away
+    an equation that defines the tuning word without never actually
+    explaining how the equation was obtained, which makes the definition
+    of the tuning word quite oscur. Here is a clear and detailed
+    explanation of that value:</p>
+    <h4 id="the-tuning-word">The tuning word</h4>
+    <p>As said previously, the idea behind the phase accumulator is to
+    decrease it down to zero, by using a constant decrement : the
+    <strong>tuning word</strong>.</p>
+    <p>The phase accumulator starts to its maximum value. It often is
+    <span class="math inline">\(2^N\)</span> where <span
+    class="math inline">\(N\)</span> is the number of bits used for the
+    PA.</p>
+    <p>Say we want to generate a note <span
+    class="math inline">\(note\)</span> of period <span
+    class="math inline">\(t_{out}\)</span> using a timer of period <span
+    class="math inline">\(t_{cpu}\)</span>. There is an integer <span
+    class="math inline">\(n\)</span> such as :</p>
+    <p><span class="math display">\[t_{out} \approx n t_{cpu} \quad\quad
+    (1)\]</span></p>
+    <p>So, the timer iterates <span class="math inline">\(n\)</span>
+    times before reaching the <span
+    class="math inline">\(note\)</span>’s period. Hence, the PA is
+    decremented <span class="math inline">\(n\)</span> times before
+    reaching zero. So we get the following equation for the tuning word
+    size <span class="math inline">\(\Delta f\)</span>:</p>
+    <p><span class="math display">\[\Delta f \approx \dfrac{max\_pa}{n}
+    \approx \dfrac{2^N}{n}\quad (2)\]</span></p>
+    <p>By inversing the relationship (1) to switch to the frequency
+    domain, we get:</p>
+    <p><span class="math display">\[f_{out} \approx \dfrac{1}{n}
+    f_{cpu}\quad\quad (3)\]</span></p>
+    <p>Now, let’s get <span class="math inline">\(f_{cpu}\)</span> on
+    the left side of this equation and let’s multiply the equation by
+    <span class="math inline">\(max\_pa\)</span> :</p>
+    <p><span class="math display">\[max\_pa\dfrac{f_{out}}{f_{cpu}}
+    \approx \dfrac{max\_pa}{n} \quad\quad (4)\]</span></p>
+    <p>Injecting (2) in (4), we finally get : <span
+    class="math display">\[ \Delta f \approx
+    max\_pa\dfrac{f_{out}}{f_{cpu}} \approx 2^N\dfrac{f_{out}}{f_{cpu}}
+    \quad\quad (5)\]</span></p>
+    <p>Now hopefully you understand what the tuning word is.</p>
+    <h3 id="recap">Recap’</h3>
+    <h4 id="strategy">Strategy</h4>
+    <p>So far, our strategy to produce a note of frequency <span
+    class="math inline">\(f\)</span> and of period <span
+    class="math inline">\(t= 1/f\)</span> is :</p>
+    <ul>
+    <li>We store <span class="math inline">\(m\)</span> samples of a
+    sinewave in a look-up table ;</li>
+    <li>We use an Arduino timer to count one by one at frequency of
+    <span class="math inline">\(f_{cpu}\)</span>;</li>
+    <li>We decrement a phase accumulator when our timer overflows ;</li>
+    <li>We increment our look-up table index when our phase accumulator
+    overflows ;</li>
+    <li>We set our compare register to the correct value in the
+    LUT.</li>
+    </ul>
+    <p>So with one look-up table and <span
+    class="math inline">\(p\)</span> phase accumulator and indexes, we
+    can theoretically produce <span class="math inline">\(p\)</span>
+    voices !</p>
+    <h4 id="constraints">Constraints</h4>
+    <p>I say theoretically because we’re not exactly able to produce a
+    1000 voices melody.</p>
+    <p>But how many voices can we fit exactly?</p>
+    <p>Understand that we are limited by our voltage levels, which is
+    determined by our timer resolution. Remember we can choose a voltage
+    output by playing with a PWM duty cycle. With an N-bit timer, the
+    maximum value of our timer is <span
+    class="math inline">\(2^{N}-1\)</span>, but its TOP value can be
+    less than that (remember the <code>ICR</code> register?). So we have
+    <span class="math inline">\(TOP\)</span> different voltage levels in
+    the range <span class="math inline">\([0,5]\)</span> V. Remember
+    also that playing <span class="math inline">\(p\)</span> voices at
+    the same time is equivalent to outputing the sum of their signal.
+    This means the number of voices <span
+    class="math inline">\(p\)</span> cannot exceed <span
+    class="math inline">\(TOP \leq 2^{N}-1\)</span>.</p>
+    <p>Now, we also have to consider the limit of the flash memory.
+    Although we don’t have to store 44,100 samples for each second of
+    our melody any more, we still have to store the melody in some ways.
+    Let’s not forget the room is already occupied by the look-up table
+    and the overall algorithm we will use later on. So, even if in
+    theory we could go up to 65535 voices with a 16-bit timer, we won’t
+    actually ever go there. And it’s not like we’d need that many
+    anyway. Twelve voices are already enough to play an orchestral
+    version of the Mario Theme Music for example. A simpler version
+    really only needs three.</p>
+    <h4 id="quality-considerations">Quality considerations</h4>
+    <p>Last step before diving into the code. The following are really
+    just information to keep in mind, quality-wise.</p>
+    <p>I mentionned that <a
+    href="https://www.norwegiancreations.com/2022/03/digital-audio-synthesis-part-1-the-oscillator/">Ragnar
+    Ranøyen Homb’s article</a> highlights some points regarding sound
+    quality. One interesting formula is the following:</p>
+    <p><span class="math display">\[f_{res} =
+    \dfrac{f_{cpu}}{max\_pa}\]</span></p>
+    <p>The <strong>frequency resolution</strong> is the <strong>smallest
+    achievable difference in frequency</strong> in regard to the
+    generating parameters. Evidently, the realm of generated frequencies
+    is discrete. So, the frequency resolution the difference between two
+    consecutive generated frequencies. And it is totally dependent on
+    the timer’s frequency and the PA size. Both have their limits: the
+    PA depends of course on the flash memory resources. As for the <span
+    class="math inline">\(f_{cpu}\)</span>, as Homb’s article
+    states:</p>
+    <blockquote>
+    <p><img src="../quote-left-solid.svg" width ="20px"></p>
+    <p><span class="math inline">\(\quad\)</span> The clock is directly
+    coupled to the highest frequency possible to create. According to
+    Nyquist […] the NCO [(<em>equivalent to what we call the
+    timer</em>)] clock needs to be &gt;= 2 * highest created frequency.
+    So if the NCO [~ timer] input clock runs at 100 kHz we can (in
+    theory) create a waveform at 50 kHz.”</p>
+    </blockquote>
+    <p>We will see further on that some other parameters reduce the
+    cpu’s clock frequency for us and therefore, we actually really want
+    to have the highest <span class="math inline">\(f_{cpu}\)</span>
+    possible to keep some flexibility.</p>
+    <p>Another quality factor is the number of samples constituting the
+    LUT. It doesn’t take that many samples to accomplish a beautiful
+    square wave, however, a sinewave will sound better with a greater
+    amount of samples.</p>
+    <h2 id="lets-code">Let’s code !</h2>
+    <p>And now… The moment you have all been waiting for ! The coooode !
+    It is all avaible on <a
+    href="https://github.com/grybouilli/multi-voice-for-Arduino">Github</a>.</p>
+    <h3 id="some-scripts">Some scripts</h3>
+    <p>First, let me introduce some python scripts that will generate
+    some things for us. Mainly, we need a script to generate the look-up
+    tables and a script to generate the tuning words.</p>
+    <p>An interesting fact to generate the tuning words is the <a
+    href="https://en.wikipedia.org/wiki/Twelfth_root_of_two">relationship
+    between the different notes’ frequencies</a>. Take the frequency of
+    any note on a piano, that’ll be f. If you go up by <span
+    class="math inline">\(i\)</span> semitones (a semitone being the
+    relationship between two neighbor key), the resulting frequency will
+    be:</p>
+    <p><span class="math display">\[ f_i = f \times
+    2^{\frac{i}{12}}\]</span></p>
+    <p>The relationship works for negative values of <span
+    class="math inline">\(i\)</span>. This is great because it means we
+    can recreate all the note’s frequencies we want from one single
+    frequency, and we can order them according to that one
+    frequency.</p>
+    <p>Because most notes’ frequencies aren’t rational numbers, we will
+    choose an A for our base frequency. A notes’ frequencies are
+    multiples of <span class="math inline">\(110\)</span> Hz; e.g the
+    famous A4 is <span class="math inline">\(440\)</span> Hz.</p>
+    <p>I’ll let you have a look at <a
+    href="https://github.com/grybouilli/multi-voice-for-Arduino/blob/main/gen_look_up.py">gen_look_up.py</a>
+    which generates sinewave, 25% square, 50% square, triangle, sawtooth
+    and semisine look-up tables. The amount of samples by default is
+    16.</p>
+    <p>Please also have a look at <a
+    href="https://github.com/grybouilli/multi-voice-for-Arduino/blob/main/gen_words.py">gen_words.py</a>
+    which generates the tuning words and something that I call the
+    <strong>index size</strong>. Basically, if there are <span
+    class="math inline">\(m\)</span> samples in the LUT and the phase
+    accumulator’s maximum values is <span
+    class="math inline">\(max\_pa\)</span>, we define index size by:</p>
+    <p><span class="math display">\[index\_size =
+    \dfrac{max\_pa}{m}\]</span></p>
+    <p>This is the <strong>number of timer steps to pass before jumping
+    to the next value in the LUT</strong>. It is equivalent to the value
+    by which the PA is decreased before moving on to the next value in
+    the LUT.</p>
+    <p>You can mess around with the different parameters described in
+    the <a
+    href="https://github.com/grybouilli/multi-voice-for-Arduino/blob/main/common_utils.py">common_utils.py</a>
+    file.</p>
+    <h3 id="multi-voice-signals">Multi-voice signals</h3>
+    <p>First, let’s generate continous notes played together. Our main
+    file looks like this:</p>
+    <div class="sourceCode" id="cb4"><pre
+    class="sourceCode numberSource cpp r numberLines lineAnchors"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1"></a><span class="pp">#include </span><span class="im">&quot;voices.hpp&quot;</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="pp">#include </span><span class="im">&quot;notes.hpp&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="dt">uint8_t</span> overflow_counter <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a>MultiV<span class="op">::</span>Voice voices <span class="op">[</span>MultiV<span class="op">::</span>VOICES<span class="op">];</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="dt">void</span> setup<span class="op">()</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="op">{</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>    MultiV<span class="op">::</span>init_multiv<span class="op">();</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a>    init_voice<span class="op">(</span>voices<span class="op">[</span><span class="dv">0</span><span class="op">],</span> A4<span class="op">,</span> MultiV<span class="op">::</span>SQUARE50<span class="op">);</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>    init_voice<span class="op">(</span>voices<span class="op">[</span><span class="dv">1</span><span class="op">],</span> C5<span class="op">,</span> MultiV<span class="op">::</span>SQUARE50<span class="op">);</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>    init_voice<span class="op">(</span>voices<span class="op">[</span><span class="dv">2</span><span class="op">],</span> E5<span class="op">,</span> MultiV<span class="op">::</span>SQUARE50<span class="op">);</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>    init_voice<span class="op">(</span>voices<span class="op">[</span><span class="dv">3</span><span class="op">],</span> A5<span class="op">,</span> MultiV<span class="op">::</span>SQUARE50<span class="op">);</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>    init_voice<span class="op">(</span>voices<span class="op">[</span><span class="dv">4</span><span class="op">],</span> C6<span class="op">,</span> MultiV<span class="op">::</span>SQUARE50<span class="op">);</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="op">}</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a></span>
+<span id="cb4-19"><a href="#cb4-19"></a>ISR<span class="op">(</span>TIMER1_OVF_vect<span class="op">)</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="op">{</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a>    <span class="co">// New output computed at a frequency of 16000000/127/4 = 31496.1 Hz </span></span>
+<span id="cb4-22"><a href="#cb4-22"></a>    <span class="co">// We compute a new value every 4 overflows </span></span>
+<span id="cb4-23"><a href="#cb4-23"></a>    <span class="co">// Below that, the sound is not recognizable</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a>    <span class="co">// Above that, we are not generating fast enough and the sound gets de-tuned (as in, the changes made get audible because they happen at a frequency &lt; 20kHz).</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a>    <span class="cf">if</span> <span class="op">(</span>overflow_counter<span class="op">++</span> <span class="op">&amp;</span> <span class="op">(</span>MultiV<span class="op">::</span>SKIP <span class="op">-</span> <span class="dv">1</span><span class="op">)){</span> <span class="cf">return</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a></span>
+<span id="cb4-27"><a href="#cb4-27"></a>    <span class="dt">uint8_t</span> out <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a></span>
+<span id="cb4-29"><a href="#cb4-29"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">uint8_t</span> voice <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> voice <span class="op">&lt;</span> MultiV<span class="op">::</span>VOICES<span class="op">;</span> <span class="op">++</span>voice<span class="op">)</span></span>
+<span id="cb4-30"><a href="#cb4-30"></a>    <span class="op">{</span></span>
+<span id="cb4-31"><a href="#cb4-31"></a>        <span class="cf">if</span><span class="op">(</span>voices<span class="op">[</span>voice<span class="op">].</span>on<span class="op">)</span> </span>
+<span id="cb4-32"><a href="#cb4-32"></a>        <span class="op">{</span></span>
+<span id="cb4-33"><a href="#cb4-33"></a>        voices<span class="op">[</span>voice<span class="op">].</span>phase_acc <span class="op">-=</span> MultiV<span class="op">::</span>get_tuning_word<span class="op">(</span>voices<span class="op">[</span>voice<span class="op">]);</span></span>
+<span id="cb4-34"><a href="#cb4-34"></a>        <span class="cf">if</span><span class="op">(</span>voices<span class="op">[</span>voice<span class="op">].</span>phase_acc <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb4-35"><a href="#cb4-35"></a>        <span class="op">{</span></span>
+<span id="cb4-36"><a href="#cb4-36"></a>            voices<span class="op">[</span>voice<span class="op">].</span>phase_acc <span class="op">+=</span> MultiV<span class="op">::</span>INDEX_SIZE<span class="op">;</span></span>
+<span id="cb4-37"><a href="#cb4-37"></a>            voices<span class="op">[</span>voice<span class="op">].</span>phase_idx<span class="op">++;</span></span>
+<span id="cb4-38"><a href="#cb4-38"></a>            voices<span class="op">[</span>voice<span class="op">].</span>phase_idx <span class="op">%=</span> MultiV<span class="op">::</span>LU_SIZE<span class="op">;</span></span>
+<span id="cb4-39"><a href="#cb4-39"></a>        <span class="op">}</span></span>
+<span id="cb4-40"><a href="#cb4-40"></a>        out <span class="op">+=</span> MultiV<span class="op">::</span>get_voice_output<span class="op">(</span>voices<span class="op">[</span>voice<span class="op">]);</span></span>
+<span id="cb4-41"><a href="#cb4-41"></a>        <span class="op">}</span></span>
+<span id="cb4-42"><a href="#cb4-42"></a>    <span class="op">}</span></span>
+<span id="cb4-43"><a href="#cb4-43"></a></span>
+<span id="cb4-44"><a href="#cb4-44"></a>    OCR1AL <span class="op">=</span> out<span class="op">;</span></span>
+<span id="cb4-45"><a href="#cb4-45"></a><span class="op">}</span></span>
+<span id="cb4-46"><a href="#cb4-46"></a></span>
+<span id="cb4-47"><a href="#cb4-47"></a><span class="dt">void</span> loop<span class="op">()</span></span>
+<span id="cb4-48"><a href="#cb4-48"></a><span class="op">{</span></span>
+<span id="cb4-49"><a href="#cb4-49"></a>    </span>
+<span id="cb4-50"><a href="#cb4-50"></a><span class="op">}</span></span></code></pre></div>
+    <p>Let’s step through this code and focus on the interesting
+    parts.</p>
+    <p>The <code>Voice</code> structure from line 6 contains the
+    following:</p>
+    <div class="sourceCode" id="cb5"><pre
+    class="sourceCode numberSource cpp r numberLines"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">struct</span> Voice</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="dt">int16_t</span> phase_acc<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="dt">uint8_t</span> phase_idx<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="dt">uint8_t</span> note<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>    <span class="dt">uint8_t</span> octave<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    Waveform style<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="dt">bool</span> on<span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="op">};</span></span></code></pre></div>
+    <p>The <code>init_multiv</code> function sets the parameters for the
+    timers. These are detailed in the file <a
+    href="https://github.com/grybouilli/multi-voice-for-Arduino/blob/main/multivoice/voices.cpp">voices.cpp</a>.</p>
+    <p>Notice lines 4 and 25. We define an
+    <code>overflow_counter</code>. On line 25, we check that we have
+    passed 3 interrupts (= timer overflows) before actually doing the
+    job of computing the next data. That is because below 4 timer
+    overflows, the signal isn’t recognizable. This means that each
+    sample of the LUT is sent out at least 4 times. Now, as mentioned on
+    line 24, above 4, we are dividing the timer frequency too much and
+    our computation becomes noticeable. So 4 is the perfect number
+    really.</p>
+    <p>The rest of this code should be pretty straight forward.</p>
+    <p>Feel free to browse through the <a
+    href="https://github.com/grybouilli/multi-voice-for-Arduino/blob/main/multivoice/voices.cpp">voices.cpp</a>
+    file to see the implementation of the different <code>MultiV</code>
+    functions.</p>
+    <h3 id="add-some-rythm">Add some rythm</h3>
+    <p>Okay, so we can play several continuous notes simultaneously. But
+    I promised you a melody. Let’s had some rythm to that !</p>
+    <p>The idea is to transform a music sheet into code. Now, at this
+    point, you’ll probably need some music theory for that. For this
+    example, I’ll implement the first 14 measures of the <a
+    href="https://musescore.com/user/2072681/scores/2601926">Super Mario
+    Bros Main Theme</a> (without the repetition).</p>
+    <center>
+    <img src="./mario_sheet.png" width="75%"></img>
+    </center>
+    <p>We need three voices as the highest number of simultaneously
+    played notes is 3 (ignore the four notes of measure 2, we’ll only
+    keep 3).</p>
+    <p>The idea is to base the rythm generation on the smallest time
+    unit in the theme. In our case, it is the <strong>quaver</strong>.
+    So, to play a quarter means that we are playing two joined
+    quavers.</p>
+    <p>We have a tempo of 180, that is, there are 180 quarters in one
+    minute, thus, 360 quavers in one minute. That means a quaver is
+    <span class="math inline">\(\tau =167\)</span> ms long.</p>
+    <p>We’ll replace the triplet quarter of measure 5 by two quavers and
+    a quarter.</p>
+    <p>The whole melody playing job will be put in the <code>loop</code>
+    function. Every <span class="math inline">\(\tau\)</span>, we move
+    onto the next quaver to play. But every <span
+    class="math inline">\(\tau/2\)</span>, we check whether the quaver
+    we play is going to be linked to the one after it to form a quarter.
+    If the quaver doesn’t form a quarter, we silence in the middle of
+    the quarter so that we can hear the distinct notes. Think of it as
+    applying an enveloppe on the sound (a pretty abrupt one). The quaver
+    we’ll hear is really <span class="math inline">\(\tau/2\)</span>
+    long.</p>
+    <p>Now, how do we know whether a quaver is linked to the following
+    quaver? We store each note of the melody as a tuple <span
+    class="math inline">\(\{X, b\}\)</span>, where <span
+    class="math inline">\(X\)</span> is the note to play and <span
+    class="math inline">\(b\)</span> is 0 or 1, depending on whether the
+    quaver is part of a quarter or not.</p>
+    <p>Some helper macros have been defined in the file <a
+    href="https://github.com/grybouilli/multi-voice-for-Arduino/blob/main/multivoice/notes.hpp">notes.hpp</a>
+    to make the code easier to read.</p>
+    <p>Here is the final code :</p>
+    <div class="sourceCode" id="cb6"><pre
+    class="sourceCode numberSource cpp r numberLines"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1"></a><span class="pp">#include </span><span class="im">&quot;voices.hpp&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="pp">#include </span><span class="im">&quot;notes.hpp&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="pp">#define QUARTER</span><span class="op">(</span>X<span class="op">)</span><span class="pp"> </span><span class="op">{</span>X<span class="op">,</span><span class="pp"> </span><span class="dv">1</span><span class="op">},</span><span class="pp"> </span><span class="op">{</span>X<span class="op">,</span><span class="pp"> </span><span class="dv">0</span><span class="op">}</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="pp">#define QUAVER</span><span class="op">(</span>X<span class="op">)</span><span class="pp"> </span><span class="op">{</span>X<span class="op">,</span><span class="pp"> </span><span class="dv">0</span><span class="op">}</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="pp">#define NOTE_COUNT </span><span class="dv">120</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="at">const</span> <span class="dt">uint16_t</span> tempo <span class="op">=</span> <span class="dv">167</span><span class="op">;</span> <span class="co">// one eigth is 167 ms</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="at">const</span> <span class="dt">uint16_t</span> time_event <span class="op">=</span> tempo<span class="op">/</span><span class="dv">2</span><span class="op">;</span> </span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="dt">uint8_t</span> overflow_counter <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a></span>
+<span id="cb6-13"><a href="#cb6-13"></a>MultiV<span class="op">::</span>Voice voices <span class="op">[</span>MultiV<span class="op">::</span>VOICES<span class="op">];</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="kw">struct</span> Note</span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="op">{</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>    <span class="dt">uint16_t</span> tone<span class="op">;</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>    <span class="dt">bool</span> hold<span class="op">;</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="op">};</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="dt">uint8_t</span> event_idx <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a><span class="dt">uint8_t</span> melody_idx <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="co">// Super Mario Bros : Main Theme</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a><span class="co">// From the following sheet : https://musescore.com/user/2072681/scores/2601926</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a><span class="dt">int16_t</span> <span class="at">const</span> melody<span class="op">[</span>MultiV<span class="op">::</span>VOICES<span class="op">][</span>NOTE_COUNT<span class="op">][</span><span class="dv">2</span><span class="op">]</span></span>
+<span id="cb6-27"><a href="#cb6-27"></a><span class="op">{</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a>    <span class="op">{</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a>        QUAVER<span class="op">(</span>E5<span class="op">),</span> QUAVER<span class="op">(</span>E5<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>E5<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>C5<span class="op">),</span>  QUARTER<span class="op">(</span>E5<span class="op">),</span>     </span>
+<span id="cb6-30"><a href="#cb6-30"></a>        QUARTER<span class="op">(</span>G5<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>G4<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a>        QUARTER<span class="op">(</span>C4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>G4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>E4<span class="op">),</span> </span>
+<span id="cb6-32"><a href="#cb6-32"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>A4<span class="op">),</span> QUARTER<span class="op">(</span>B4<span class="op">),</span> QUAVER<span class="op">(</span>As4<span class="op">),</span> QUARTER<span class="op">(</span>A4<span class="op">),</span></span>
+<span id="cb6-33"><a href="#cb6-33"></a>        QUAVER<span class="op">(</span>G4<span class="op">),</span> QUAVER<span class="op">(</span>E5<span class="op">),</span> QUARTER<span class="op">(</span>G5<span class="op">),</span> QUARTER<span class="op">(</span>A5<span class="op">),</span> QUAVER<span class="op">(</span>F5<span class="op">),</span> QUAVER<span class="op">(</span>G5<span class="op">),</span></span>
+<span id="cb6-34"><a href="#cb6-34"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>E5<span class="op">),</span> QUAVER<span class="op">(</span>C5<span class="op">),</span> QUAVER<span class="op">(</span>D5<span class="op">),</span> QUARTER<span class="op">(</span>B4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-35"><a href="#cb6-35"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>G5<span class="op">),</span> QUAVER<span class="op">(</span>Fs5<span class="op">),</span> QUAVER<span class="op">(</span>F5<span class="op">),</span> QUARTER<span class="op">(</span>Ds5<span class="op">),</span> QUAVER<span class="op">(</span>E5<span class="op">),</span>                    </span>
+<span id="cb6-36"><a href="#cb6-36"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>Gs4<span class="op">),</span> QUAVER<span class="op">(</span>A4<span class="op">),</span> QUAVER<span class="op">(</span>C5<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>A4<span class="op">),</span> QUAVER<span class="op">(</span>C5<span class="op">),</span> QUAVER<span class="op">(</span>D5<span class="op">),</span></span>
+<span id="cb6-37"><a href="#cb6-37"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>G5<span class="op">),</span> QUAVER<span class="op">(</span>Fs5<span class="op">),</span> QUAVER<span class="op">(</span>F5<span class="op">),</span> QUARTER<span class="op">(</span>Ds5<span class="op">),</span> QUAVER<span class="op">(</span>E5<span class="op">),</span></span>
+<span id="cb6-38"><a href="#cb6-38"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>C6<span class="op">),</span> QUAVER<span class="op">(</span>C6<span class="op">),</span> QUARTER<span class="op">(</span>C6<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-39"><a href="#cb6-39"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>G5<span class="op">),</span> QUAVER<span class="op">(</span>Fs5<span class="op">),</span> QUAVER<span class="op">(</span>F5<span class="op">),</span> QUARTER<span class="op">(</span>Ds5<span class="op">),</span> QUAVER<span class="op">(</span>E5<span class="op">),</span>                    </span>
+<span id="cb6-40"><a href="#cb6-40"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>Gs4<span class="op">),</span> QUAVER<span class="op">(</span>A4<span class="op">),</span> QUAVER<span class="op">(</span>C5<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>A4<span class="op">),</span> QUAVER<span class="op">(</span>C5<span class="op">),</span> QUAVER<span class="op">(</span>D5<span class="op">),</span></span>
+<span id="cb6-41"><a href="#cb6-41"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>Ds5<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>D5<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-42"><a href="#cb6-42"></a>        QUARTER<span class="op">(</span>C5<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-43"><a href="#cb6-43"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">)</span></span>
+<span id="cb6-44"><a href="#cb6-44"></a>    <span class="op">},</span></span>
+<span id="cb6-45"><a href="#cb6-45"></a>    <span class="op">{</span></span>
+<span id="cb6-46"><a href="#cb6-46"></a>        QUAVER<span class="op">(</span>Fs4<span class="op">),</span> QUAVER<span class="op">(</span>Fs4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>Fs4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>Fs4<span class="op">),</span> QUARTER<span class="op">(</span>Fs4<span class="op">),</span>  </span>
+<span id="cb6-47"><a href="#cb6-47"></a>        QUARTER<span class="op">(</span>B4<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>B4<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-48"><a href="#cb6-48"></a>        QUARTER<span class="op">(</span>E4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>C4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>G3<span class="op">),</span> </span>
+<span id="cb6-49"><a href="#cb6-49"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>C4<span class="op">),</span> QUARTER<span class="op">(</span>D4<span class="op">),</span> QUAVER<span class="op">(</span>Cs4<span class="op">),</span> QUARTER<span class="op">(</span>C4<span class="op">),</span></span>
+<span id="cb6-50"><a href="#cb6-50"></a>        QUAVER<span class="op">(</span>C4<span class="op">),</span> QUAVER<span class="op">(</span>G4<span class="op">),</span> QUARTER<span class="op">(</span>B4<span class="op">),</span> QUARTER<span class="op">(</span>C5<span class="op">),</span> QUAVER<span class="op">(</span>A4<span class="op">),</span> QUAVER<span class="op">(</span>B4<span class="op">),</span></span>
+<span id="cb6-51"><a href="#cb6-51"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>A4<span class="op">),</span> QUAVER<span class="op">(</span>E4<span class="op">),</span> QUAVER<span class="op">(</span>F4<span class="op">),</span> QUARTER<span class="op">(</span>D4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-52"><a href="#cb6-52"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>E5<span class="op">),</span> QUAVER<span class="op">(</span>Ds5<span class="op">),</span> QUAVER<span class="op">(</span>D5<span class="op">),</span> QUARTER<span class="op">(</span>B4<span class="op">),</span> QUAVER<span class="op">(</span>C5<span class="op">),</span>                     </span>
+<span id="cb6-53"><a href="#cb6-53"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>E4<span class="op">),</span> QUAVER<span class="op">(</span>F4<span class="op">),</span> QUAVER<span class="op">(</span>G4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>C4<span class="op">),</span> QUAVER<span class="op">(</span>E4<span class="op">),</span> QUAVER<span class="op">(</span>F4<span class="op">),</span></span>
+<span id="cb6-54"><a href="#cb6-54"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>E5<span class="op">),</span> QUAVER<span class="op">(</span>Ds5<span class="op">),</span> QUAVER<span class="op">(</span>D5<span class="op">),</span> QUARTER<span class="op">(</span>B4<span class="op">),</span> QUAVER<span class="op">(</span>C5<span class="op">),</span></span>
+<span id="cb6-55"><a href="#cb6-55"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>G5<span class="op">),</span> QUAVER<span class="op">(</span>G5<span class="op">),</span> QUARTER<span class="op">(</span>G5<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-56"><a href="#cb6-56"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>E5<span class="op">),</span> QUAVER<span class="op">(</span>Ds5<span class="op">),</span> QUAVER<span class="op">(</span>D5<span class="op">),</span> QUARTER<span class="op">(</span>B4<span class="op">),</span> QUAVER<span class="op">(</span>C5<span class="op">),</span>                     </span>
+<span id="cb6-57"><a href="#cb6-57"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>E4<span class="op">),</span> QUAVER<span class="op">(</span>F4<span class="op">),</span> QUAVER<span class="op">(</span>G4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>C4<span class="op">),</span> QUAVER<span class="op">(</span>E4<span class="op">),</span> QUAVER<span class="op">(</span>F4<span class="op">),</span></span>
+<span id="cb6-58"><a href="#cb6-58"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>Gs4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>F4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-59"><a href="#cb6-59"></a>        QUARTER<span class="op">(</span>E4<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-60"><a href="#cb6-60"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">)</span></span>
+<span id="cb6-61"><a href="#cb6-61"></a>    <span class="op">},</span></span>
+<span id="cb6-62"><a href="#cb6-62"></a>    </span>
+<span id="cb6-63"><a href="#cb6-63"></a>    <span class="op">{</span></span>
+<span id="cb6-64"><a href="#cb6-64"></a>        QUAVER<span class="op">(</span>D3<span class="op">),</span> QUAVER<span class="op">(</span>D3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>D3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>D3<span class="op">),</span> QUARTER<span class="op">(</span>D3<span class="op">),</span>  </span>
+<span id="cb6-65"><a href="#cb6-65"></a>        QUARTER<span class="op">(</span>G4<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>G3<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-66"><a href="#cb6-66"></a>        QUARTER<span class="op">(</span>G3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>E3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>C3<span class="op">),</span> </span>
+<span id="cb6-67"><a href="#cb6-67"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>F3<span class="op">),</span> QUARTER<span class="op">(</span>G3<span class="op">),</span> QUAVER<span class="op">(</span>Fs3<span class="op">),</span> QUARTER<span class="op">(</span>G3<span class="op">),</span></span>
+<span id="cb6-68"><a href="#cb6-68"></a>        QUAVER<span class="op">(</span>E3<span class="op">),</span> QUAVER<span class="op">(</span>C4<span class="op">),</span> QUARTER<span class="op">(</span>E4<span class="op">),</span> QUARTER<span class="op">(</span>F4<span class="op">),</span> QUAVER<span class="op">(</span>D4<span class="op">),</span> QUAVER<span class="op">(</span>E4<span class="op">),</span></span>
+<span id="cb6-69"><a href="#cb6-69"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>C4<span class="op">),</span> QUAVER<span class="op">(</span>A3<span class="op">),</span> QUAVER<span class="op">(</span>B3<span class="op">),</span> QUARTER<span class="op">(</span>G3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-70"><a href="#cb6-70"></a>        QUARTER<span class="op">(</span>C3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>G3<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>C4<span class="op">),</span>                        </span>
+<span id="cb6-71"><a href="#cb6-71"></a>        QUARTER<span class="op">(</span>F3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>C4<span class="op">),</span> QUARTER<span class="op">(</span>C4<span class="op">),</span> QUARTER<span class="op">(</span>F3<span class="op">),</span></span>
+<span id="cb6-72"><a href="#cb6-72"></a>        QUARTER<span class="op">(</span>C3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>G3<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>G3<span class="op">),</span> QUAVER<span class="op">(</span>C4<span class="op">),</span></span>
+<span id="cb6-73"><a href="#cb6-73"></a>        QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>F5<span class="op">),</span> QUAVER<span class="op">(</span>F5<span class="op">),</span> QUARTER<span class="op">(</span>F5<span class="op">),</span> QUARTER<span class="op">(</span>G3<span class="op">),</span></span>
+<span id="cb6-74"><a href="#cb6-74"></a>        QUARTER<span class="op">(</span>C3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>G3<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>C4<span class="op">),</span>                        </span>
+<span id="cb6-75"><a href="#cb6-75"></a>        QUARTER<span class="op">(</span>F3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>C4<span class="op">),</span> QUARTER<span class="op">(</span>C4<span class="op">),</span> QUARTER<span class="op">(</span>F3<span class="op">),</span></span>
+<span id="cb6-76"><a href="#cb6-76"></a>        QUARTER<span class="op">(</span>C3<span class="op">),</span> QUARTER<span class="op">(</span>Gs3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>As3<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span></span>
+<span id="cb6-77"><a href="#cb6-77"></a>        QUARTER<span class="op">(</span>C4<span class="op">),</span> QUAVER<span class="op">(</span>SILENCE<span class="op">),</span> QUAVER<span class="op">(</span>G3<span class="op">),</span> QUARTER<span class="op">(</span>G3<span class="op">),</span> QUARTER<span class="op">(</span>C3<span class="op">),</span></span>
+<span id="cb6-78"><a href="#cb6-78"></a>        QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">),</span> QUARTER<span class="op">(</span>SILENCE<span class="op">)</span></span>
+<span id="cb6-79"><a href="#cb6-79"></a>    <span class="op">}</span></span>
+<span id="cb6-80"><a href="#cb6-80"></a><span class="op">};</span></span>
+<span id="cb6-81"><a href="#cb6-81"></a></span>
+<span id="cb6-82"><a href="#cb6-82"></a><span class="dt">void</span> setup<span class="op">()</span></span>
+<span id="cb6-83"><a href="#cb6-83"></a><span class="op">{</span></span>
+<span id="cb6-84"><a href="#cb6-84"></a>    MultiV<span class="op">::</span>init_multiv<span class="op">();</span></span>
+<span id="cb6-85"><a href="#cb6-85"></a></span>
+<span id="cb6-86"><a href="#cb6-86"></a>    MultiV<span class="op">::</span>init_voice<span class="op">(</span>voices<span class="op">[</span><span class="dv">0</span><span class="op">],</span> melody<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">],</span> MultiV<span class="op">::</span>SQUARE50<span class="op">);</span></span>
+<span id="cb6-87"><a href="#cb6-87"></a>    MultiV<span class="op">::</span>init_voice<span class="op">(</span>voices<span class="op">[</span><span class="dv">1</span><span class="op">],</span> melody<span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">],</span> MultiV<span class="op">::</span>SQUARE25<span class="op">);</span></span>
+<span id="cb6-88"><a href="#cb6-88"></a>    MultiV<span class="op">::</span>init_voice<span class="op">(</span>voices<span class="op">[</span><span class="dv">2</span><span class="op">],</span> melody<span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">],</span> MultiV<span class="op">::</span>SAWTOOTH<span class="op">);</span></span>
+<span id="cb6-89"><a href="#cb6-89"></a><span class="op">}</span></span>
+<span id="cb6-90"><a href="#cb6-90"></a></span>
+<span id="cb6-91"><a href="#cb6-91"></a>ISR<span class="op">(</span>TIMER1_OVF_vect<span class="op">)</span></span>
+<span id="cb6-92"><a href="#cb6-92"></a><span class="op">{</span></span>
+<span id="cb6-93"><a href="#cb6-93"></a>    <span class="co">// New output computed at a frequency of 16000000/127/4 = 31496.1 Hz </span></span>
+<span id="cb6-94"><a href="#cb6-94"></a>    <span class="co">// We compute a new value every 4 overflows </span></span>
+<span id="cb6-95"><a href="#cb6-95"></a>    <span class="co">// Below that, the sound is not recognizable</span></span>
+<span id="cb6-96"><a href="#cb6-96"></a>    <span class="co">// Above that, we are not generating fast enough and the sound gets de-tuned (as in, the changes made get audible because they happen at a frequency &lt; 20kHz).</span></span>
+<span id="cb6-97"><a href="#cb6-97"></a>    <span class="cf">if</span> <span class="op">(</span>overflow_counter<span class="op">++</span> <span class="op">&amp;</span> <span class="op">(</span>MultiV<span class="op">::</span>SKIP <span class="op">-</span> <span class="dv">1</span><span class="op">)){</span> <span class="cf">return</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb6-98"><a href="#cb6-98"></a></span>
+<span id="cb6-99"><a href="#cb6-99"></a>    <span class="dt">uint8_t</span> out <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-100"><a href="#cb6-100"></a></span>
+<span id="cb6-101"><a href="#cb6-101"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">uint8_t</span> voice <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> voice <span class="op">&lt;</span> MultiV<span class="op">::</span>VOICES<span class="op">;</span> <span class="op">++</span>voice<span class="op">)</span></span>
+<span id="cb6-102"><a href="#cb6-102"></a>    <span class="op">{</span></span>
+<span id="cb6-103"><a href="#cb6-103"></a>        <span class="cf">if</span><span class="op">(</span>voices<span class="op">[</span>voice<span class="op">].</span>on<span class="op">)</span> </span>
+<span id="cb6-104"><a href="#cb6-104"></a>        <span class="op">{</span></span>
+<span id="cb6-105"><a href="#cb6-105"></a>        voices<span class="op">[</span>voice<span class="op">].</span>phase_acc <span class="op">-=</span> MultiV<span class="op">::</span>get_tuning_word<span class="op">(</span>voices<span class="op">[</span>voice<span class="op">]);</span></span>
+<span id="cb6-106"><a href="#cb6-106"></a>        <span class="cf">if</span><span class="op">(</span>voices<span class="op">[</span>voice<span class="op">].</span>phase_acc <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb6-107"><a href="#cb6-107"></a>        <span class="op">{</span></span>
+<span id="cb6-108"><a href="#cb6-108"></a>            voices<span class="op">[</span>voice<span class="op">].</span>phase_acc <span class="op">+=</span> MultiV<span class="op">::</span>INDEX_SIZE<span class="op">;</span></span>
+<span id="cb6-109"><a href="#cb6-109"></a>            voices<span class="op">[</span>voice<span class="op">].</span>phase_idx<span class="op">++;</span></span>
+<span id="cb6-110"><a href="#cb6-110"></a>            voices<span class="op">[</span>voice<span class="op">].</span>phase_idx <span class="op">%=</span> MultiV<span class="op">::</span>LU_SIZE<span class="op">;</span></span>
+<span id="cb6-111"><a href="#cb6-111"></a>        <span class="op">}</span></span>
+<span id="cb6-112"><a href="#cb6-112"></a>        out <span class="op">+=</span> MultiV<span class="op">::</span>get_voice_output<span class="op">(</span>voices<span class="op">[</span>voice<span class="op">]);</span></span>
+<span id="cb6-113"><a href="#cb6-113"></a>        <span class="op">}</span></span>
+<span id="cb6-114"><a href="#cb6-114"></a>    <span class="op">}</span></span>
+<span id="cb6-115"><a href="#cb6-115"></a></span>
+<span id="cb6-116"><a href="#cb6-116"></a>    OCR1AL <span class="op">=</span> out<span class="op">;</span></span>
+<span id="cb6-117"><a href="#cb6-117"></a><span class="op">}</span></span>
+<span id="cb6-118"><a href="#cb6-118"></a></span>
+<span id="cb6-119"><a href="#cb6-119"></a><span class="dt">void</span> loop<span class="op">()</span></span>
+<span id="cb6-120"><a href="#cb6-120"></a><span class="op">{</span></span>
+<span id="cb6-121"><a href="#cb6-121"></a>    <span class="cf">if</span><span class="op">(</span>event_idx <span class="op">==</span> <span class="dv">2</span><span class="op">)</span> </span>
+<span id="cb6-122"><a href="#cb6-122"></a>    <span class="op">{</span></span>
+<span id="cb6-123"><a href="#cb6-123"></a>        melody_idx<span class="op">++;</span></span>
+<span id="cb6-124"><a href="#cb6-124"></a>        melody_idx <span class="op">%=</span> NOTE_COUNT<span class="op">;</span></span>
+<span id="cb6-125"><a href="#cb6-125"></a>        event_idx <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-126"><a href="#cb6-126"></a>    <span class="op">}</span> </span>
+<span id="cb6-127"><a href="#cb6-127"></a></span>
+<span id="cb6-128"><a href="#cb6-128"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">uint8_t</span> voice <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> voice <span class="op">&lt;</span> MultiV<span class="op">::</span>VOICES<span class="op">;</span> <span class="op">++</span>voice<span class="op">)</span></span>
+<span id="cb6-129"><a href="#cb6-129"></a>    <span class="op">{</span></span>
+<span id="cb6-130"><a href="#cb6-130"></a>        <span class="cf">if</span><span class="op">(!</span>event_idx <span class="op">||</span> event_idx <span class="op">&amp;&amp;</span> melody<span class="op">[</span>voice<span class="op">][</span>melody_idx<span class="op">][</span><span class="dv">1</span><span class="op">])</span></span>
+<span id="cb6-131"><a href="#cb6-131"></a>            MultiV<span class="op">::</span>set_voice<span class="op">(</span>voices<span class="op">[</span>voice<span class="op">],</span> melody<span class="op">[</span>voice<span class="op">][</span>melody_idx<span class="op">][</span><span class="dv">0</span><span class="op">]);</span></span>
+<span id="cb6-132"><a href="#cb6-132"></a>        <span class="cf">else</span></span>
+<span id="cb6-133"><a href="#cb6-133"></a>            MultiV<span class="op">::</span>set_voice<span class="op">(</span>voices<span class="op">[</span>voice<span class="op">],</span> SILENCE<span class="op">);</span></span>
+<span id="cb6-134"><a href="#cb6-134"></a>    <span class="op">}</span></span>
+<span id="cb6-135"><a href="#cb6-135"></a></span>
+<span id="cb6-136"><a href="#cb6-136"></a>    delay<span class="op">(</span>time_event<span class="op">);</span></span>
+<span id="cb6-137"><a href="#cb6-137"></a>    event_idx<span class="op">++;</span></span>
+<span id="cb6-138"><a href="#cb6-138"></a><span class="op">}</span></span></code></pre></div>
+    <p>This bad boy of a program weighs 2788 bytes, that is 2.8KB, way
+    below the maximum 32 KB that the Atmega can hold. So, we could
+    implement some much longer melody.</p>
+    <h3 id="some-ideas-for-the-future">Some ideas for the future</h3>
+    <p>In the current code, we apply a form of envelope that is quite
+    abrupt. We play the sound at full volume for half the note’s time
+    and then silence it for the other half. If you’ve ever heard of <a
+    href="https://www.musicgateway.com/blog/music-industry/music-production/adsr-envelope">ADSR
+    envelope</a>, this could be a quite interesting feature to add to
+    our current code. What’s mostly needed is to reduce our
+    <code>time_event</code> variable and temper with the note’s volume
+    as it’s being played.</p>
+    <p>You can try some envelope before hand with <a
+    href="https://phyanim.sciences.univ-nantes.fr/Ondes/son/synthese_son.php">this
+    nice tool</a>.</p>
+    <p>In the S/O topic I referenced earlier in this article, the person
+    who answered the question even changed the type of waveform during
+    the note’s output depending on the date in the note’s output, to
+    make it fade away mor smoothly.</p>
+    <h2 id="contact-contribution">Contact &amp; Contribution</h2>
+    <p>Any contributions on the code through <a
+    href="https://github.com/grybouilli/multi-voice-for-Arduino/">Github</a>
+    is welcome.</p>
+    <p>If you have questions or want to discuss, don’t hesitate to
+    e-mail me at
+    <code>&lt;my-github-username&gt; @ outlook . fr</code>.</p>
+    <h2 id="references">References</h2>
+    <ul>
+    <li><a
+    href="https://stackoverflow.com/questions/28976608/arduino-how-to-create-two-or-more-tones-simultaneously-on-a-piezo-buzzer">Arduino
+    - How to create two or more tones simultaneously on a piezo buzzer?,
+    <em>stackoverflow</em></a></li>
+    <li><a
+    href="https://sensorium.github.io/Mozzi/examples/#01.Basics">The
+    Mozzi Library</a></li>
+    <li><a
+    href="https://en.wikipedia.org/wiki/Digital_signal_processing">Digital
+    Signal Processing, <em>Wikipedia</em></a></li>
+    <li><a
+    href="https://docs.arduino.cc/tutorials/generic/secrets-of-arduino-pwm/">Secrets
+    of Arduino PWM, <em>Arduino</em></a></li>
+    <li><a
+    href="https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf">Atmega328p
+    Datasheet, <em>Atmel</em></a></li>
+    <li><a
+    href="https://learn.sparkfun.com/tutorials/arduino-comparison-guide/atmega328-boards">Arduino
+    Comparison Guide - JIMBLOM, <em>Sparkfun</em></a></li>
+    <li><a
+    href="https://docs.arduino.cc/learn/microcontrollers/analog-output/">Basic
+    of PWM, <em>Arduino</em></a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Fourier_series">Fourier
+    Series, <em>Wikipedia</em></a></li>
+    <li><a
+    href="https://www.norwegiancreations.com/2022/03/digital-audio-synthesis-part-1-the-oscillator/">Digital
+    audio synthesis part 1: The oscillator - Ragnar Ranøyen Homb,
+    <em>Norwegian Creations</em></a></li>
+    <li><a
+    href="https://github.com/grybouilli/multi-voice-for-Arduino">multi-voice
+    for Ardunio - grybouilli, <em>Github</em></a></li>
+    <li><a
+    href="https://en.wikipedia.org/wiki/Twelfth_root_of_two">Twelth root
+    of two, <em>Wikipedia</em></a></li>
+    <li><a href="https://musescore.com/user/2072681/scores/2601926">The
+    Super Mario Bros Main Theme, <em>musescore</em></a></li>
+    <li><a
+    href="https://www.musicgateway.com/blog/music-industry/music-production/adsr-envelope">ADSR
+    Envelope in Music Explained - Sam Jones, <em>Music
+    Gateway</em></a></li>
+    <li><a
+    href="https://phyanim.sciences.univ-nantes.fr/Ondes/son/synthese_son.php">Synthèse
+    d’un son musical - Geneviève Tulloue, <em>Université de
+    Nantes</em></a></li>
+    </ul>
+  </body>
+</html>

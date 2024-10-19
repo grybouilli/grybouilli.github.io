@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>$title$</title>
+    <link rel="stylesheet" type="text/css" href="../posts_style.css" />
+    <link rel="stylesheet" type="text/css" href="../syntax-highlight.css" />
+    $if(math)$
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
+    ></script>
+    $endif$
+    <base target="_blank" rel="noopener noreferrer">
+  </head>
+
+  <header id="title-block-header">
+    <h1 class="trans-text-head">$title$</h1>
+    <p class="author">$author$</p>
+  </header>
+  <body>
+    <div id="TOC">
+      <span class="highlight"> $toc$ </span>
+    </div>
+    $body$
+  </body>
+</html>
