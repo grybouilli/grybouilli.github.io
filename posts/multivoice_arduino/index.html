@@ -5,13 +5,16 @@
     <title>Multi-voice Sound Generation with Arduino</title>
     <link rel="stylesheet" type="text/css" href="../posts_style.css" />
     <link rel="stylesheet" type="text/css" href="../syntax-highlight.css" />
+    <script src="../../../back_to_menu.js"></script>
         <script
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
     ></script>
-        <base target="_blank" rel="noopener noreferrer">
+        <!-- <base target="_blank" rel="noopener noreferrer"> -->
   </head>
-
+    <script>
+      document.write(getBackToMenu('../', 'Back to posts', 18));
+  </script>
   <header id="title-block-header">
     <h1 class="trans-text-head">Multi-voice Sound Generation with
 Arduino</h1>
@@ -52,17 +55,21 @@ id="toc-counting-and-generating">Counting and generating</a></li>
 id="toc-multi-voice-signals">Multi-voice signals</a></li>
 <li><a href="#add-some-rythm" id="toc-add-some-rythm">Add some
 rythm</a></li>
+<li><a href="#some-electronics" id="toc-some-electronics">Some
+electronics</a></li>
 <li><a href="#some-ideas-for-the-future"
 id="toc-some-ideas-for-the-future">Some ideas for the future</a></li>
 </ul></li>
 <li><a href="#contact-contribution"
 id="toc-contact-contribution">Contact &amp; Contribution</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#to-investigate" id="toc-to-investigate">to
+investigate</a></li>
 </ul></li>
 </ul> </span>
     </div>
-    <!-- <h1 id="multi-voice-sound-generation-with-arduino">Multi-voice Sound -->
-    <!-- Generation with Arduino</h1> -->
+    <h1 id="multi-voice-sound-generation-with-arduino">Multi-voice Sound
+    Generation with Arduino</h1>
     <h2 id="foreword">Foreword</h2>
     <h3 id="motivations">Motivations</h3>
     <p>I wrote the following article because I wanted to program the
@@ -810,6 +817,25 @@ id="toc-contact-contribution">Contact &amp; Contribution</a></li>
     <p>This bad boy of a program weighs 2788 bytes, that is 2.8KB, way
     below the maximum 32 KB that the Atmega can hold. So, we could
     implement some much longer melody.</p>
+    <h3 id="some-electronics">Some electronics</h3>
+    <p>Now, you might want to hook-up a speaker or a piezo buzzer
+    directly onto the pin 9 of your Arduino to listen to the beautiful
+    sound you’ve programmed. And it would work, you would hear the
+    melody. But, it wouldn’t actually be completely true to the signal
+    we’re actually trying to achieve.</p>
+    <p>The signal we’re producing so far is <strong>digital</strong>. It
+    is made of discrete values. Producing a sinewave requires being able
+    to produce continuous values. Luckily for us, there’s a way to make
+    a quick, cheap, (bad quality), <strong>Digital-to-Analog
+    Converter</strong> (DAC). Here’s the schematic:</p>
+    <figure>
+    <img src="./electric-schematic.png"
+    alt="DAC schematic for Arduino" />
+    <figcaption aria-hidden="true">DAC schematic for
+    Arduino</figcaption>
+    </figure>
+    <p>As stated previously, any few hundred Ohms resistor will do the
+    job. The capacitor should be 100 nF.</p>
     <h3 id="some-ideas-for-the-future">Some ideas for the future</h3>
     <p>In the current code, we apply a form of envelope that is quite
     abrupt. We play the sound at full volume for half the note’s time
@@ -880,5 +906,7 @@ id="toc-contact-contribution">Contact &amp; Contribution</a></li>
     d’un son musical - Geneviève Tulloue, <em>Université de
     Nantes</em></a></li>
     </ul>
+    <h2 id="to-investigate">to investigate</h2>
+    <p>https://github.com/Benjamin-Lapointe-Pinel/ArduinoProgrammableSoundGenerator</p>
   </body>
 </html>

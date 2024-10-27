@@ -523,6 +523,16 @@ void loop()
 
 This bad boy of a program weighs 2788 bytes, that is 2.8KB, way below the maximum 32 KB that the Atmega can hold. So, we could implement some much longer melody.
 
+### Some electronics
+
+Now, you might want to hook-up a speaker or a piezo buzzer directly onto the pin 9 of your Arduino to listen to the beautiful sound you've programmed. And it would work, you would hear the melody. But, it wouldn't actually be completely true to the signal we're actually trying to achieve.
+
+The signal we're producing so far is **digital**. It is made of discrete values. Producing a sinewave requires being able to produce continuous values. Luckily for us, there's a way to make a quick, cheap, (bad quality), **Digital-to-Analog Converter** (DAC). Here's the schematic:
+
+![DAC schematic for Arduino](./electric-schematic.png)
+
+As stated previously, any few hundred Ohms resistor will do the job. The capacitor should be 100 nF.
+
 ### Some ideas for the future
 
 In the current code, we apply a form of envelope that is quite abrupt. We play the sound at full volume for half the note's time and then silence it for the other half. If you've ever heard of [ADSR envelope](https://www.musicgateway.com/blog/music-industry/music-production/adsr-envelope), this could be a quite interesting feature to add to our current code. What's mostly needed is to reduce our `time_event` variable and temper with the note's volume as it's being played.
@@ -554,3 +564,6 @@ If you have questions or want to discuss, don't hesitate to e-mail me at `<my-gi
 * [The Super Mario Bros Main Theme, *musescore*](https://musescore.com/user/2072681/scores/2601926)
 * [ADSR Envelope in Music Explained - Sam Jones, *Music Gateway*](https://www.musicgateway.com/blog/music-industry/music-production/adsr-envelope)
 * [Synthèse d'un son musical - Geneviève Tulloue, *Université de Nantes*](https://phyanim.sciences.univ-nantes.fr/Ondes/son/synthese_son.php)
+
+## to investigate
+https://github.com/Benjamin-Lapointe-Pinel/ArduinoProgrammableSoundGenerator

@@ -5,15 +5,18 @@
     <title>$title$</title>
     <link rel="stylesheet" type="text/css" href="../posts_style.css" />
     <link rel="stylesheet" type="text/css" href="../syntax-highlight.css" />
+    <script src="../../../back_to_menu.js"></script>
     $if(math)$
     <script
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
     ></script>
     $endif$
-    <base target="_blank" rel="noopener noreferrer">
+    <!-- <base target="_blank" rel="noopener noreferrer"> -->
   </head>
-
+    <script>
+      document.write(getBackToMenu('../', 'Back to posts', 18));
+  </script>
   <header id="title-block-header">
     <h1 class="trans-text-head">$title$</h1>
     <p class="author">$author$</p>
