@@ -25,6 +25,26 @@
 
   /* This centers our sketch vertically. */
   align-items: center;
+  scale: 0.85;
+}
+
+#presentation-text-holder {
+  margin-left: 2em;
+  margin-right: 2em;
+  display: flex;
+  position: relative;
+  /* top: -25px; */
+  /* This centers our sketch horizontally. */
+  /* justify-content: center; */
+
+  /* This centers our sketch vertically. */
+  align-items: center;
+  filter: drop-shadow(2px 2px 1px var(--dark-violet));
+    font-family: "lgc";
+    font-size: 1.75rem;
+    /* padding: 2em; */
+    /* text-align: center; */
+    color: var(--blue-trans);
 }
 
 .container-block {
