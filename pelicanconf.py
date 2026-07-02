@@ -17,9 +17,9 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS = (
-    ("Publications", "#"),
-    ("Projects", "#"),
-    ("Courses", "#"),
+    ("Publications", "/category/publications.html"),
+    ("Projects", "/category/projects.html"),
+    ("Courses", "/pages/courses.html"),
     ("Resume", "/pages/resume.html"),
 )
 
