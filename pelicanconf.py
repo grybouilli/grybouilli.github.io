@@ -40,7 +40,7 @@ THEME = "pelican-alchemy/alchemy"
 SITESUBTITLE = "PhD Student in Computer Science · Inria de Lyon"
 
 BIO = """
-I'm Nicolas Gry, PhD Student at Inria de Lyon, France. My research focuses on AI-based audio DSPs used on real-time embedded platforms for musical creation.
+I'm Nicolas Gry, PhD Student at Inria de Lyon, France. My research focuses on AI-based audio DSPs used in real-time embedded platforms.
 """
 
 STATIC_PATHS = ["static", "images"]
