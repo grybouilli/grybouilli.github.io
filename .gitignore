@@ -2,3 +2,4 @@
 content/test.md
 __pycache__
 output
+.venv
