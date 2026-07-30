@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Nicolas Gry - extra</title><link href="https://grybouilli.github.io/" rel="alternate"/><link href="https://grybouilli.github.io/feeds/extra.atom.xml" rel="self"/><id>https://grybouilli.github.io/</id><updated>2026-09-07T00:00:00+02:00</updated><subtitle>PhD Student in Computer Science · Inria de Lyon</subtitle><entry><title>Image Viewer</title><link href="https://grybouilli.github.io/extra/" rel="alternate"/><published>2026-09-07T00:00:00+02:00</published><updated>2026-09-07T00:00:00+02:00</updated><author><name>Nicolas Gry</name></author><id>tag:grybouilli.github.io,2026-09-07:/extra/</id><summary type="html">
+
+    &lt;div id="container"&gt;
+
+        &lt;div id="left"&gt;
+
+            &lt;div id="controls"&gt;
+                Width:
+                &lt;input id="width" type="number" value="16" min="1"&gt;
+
+                Height:
+                &lt;input id="height" type="number" value="16" min="1"&gt;
+
+                &lt;label&gt;
+                    &lt;input id="rgbMode" type="checkbox"&gt;
+                    RGB
+                &lt;/label&gt;
+            &lt;/div&gt;
+
+            &lt;textarea id="data"&gt;
+255 0 0 255 128 0 255 255 0 0 255 0
+0 255 255 0 0 255 255 0 255 255 255 255
+&lt;/textarea&gt;
+
+        &lt;/div&gt;
+
+        &lt;div id="right"&gt;
+            &lt;canvas id="canvas"&gt;&lt;/canvas&gt;
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;script&gt;
+
+        const textarea = document.getElementById("data");
+        const widthBox = document.getElementById("width");
+        const heightBox = document.getElementById("height");
+        const rgbMode = document.getElementById("rgbMode");
+
+        const canvas = document …&lt;/script&gt;</summary><content type="html">
+
+    &lt;div id="container"&gt;
+
+        &lt;div id="left"&gt;
+
+            &lt;div id="controls"&gt;
+                Width:
+                &lt;input id="width" type="number" value="16" min="1"&gt;
+
+                Height:
+                &lt;input id="height" type="number" value="16" min="1"&gt;
+
+                &lt;label&gt;
+                    &lt;input id="rgbMode" type="checkbox"&gt;
+                    RGB
+                &lt;/label&gt;
+            &lt;/div&gt;
+
+            &lt;textarea id="data"&gt;
+255 0 0 255 128 0 255 255 0 0 255 0
+0 255 255 0 0 255 255 0 255 255 255 255
+&lt;/textarea&gt;
+
+        &lt;/div&gt;
+
+        &lt;div id="right"&gt;
+            &lt;canvas id="canvas"&gt;&lt;/canvas&gt;
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;script&gt;
+
+        const textarea = document.getElementById("data");
+        const widthBox = document.getElementById("width");
+        const heightBox = document.getElementById("height");
+        const rgbMode = document.getElementById("rgbMode");
+
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        function clamp(v) {
+            return Math.max(0, Math.min(255, v | 0));
+        }
+
+        function render() {
+            const w = parseInt(widthBox.value);
+            const h = parseInt(heightBox.value);
+
+            if (!w || !h)
+                return;
+
+            let nums;
+
+            if (rgbMode.checked) {
+                // Matches "(r,g,b)", "(r, g, b)", etc.
+                nums = [];
+                const regex = /\(\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/g;
+
+                let m;
+                while ((m = regex.exec(textarea.value)) !== null) {
+                    nums.push(
+                        clamp(Number(m[1])),
+                        clamp(Number(m[2])),
+                        clamp(Number(m[3]))
+                    );
+                }
+            }
+            else {
+                nums = textarea.value
+                    .trim()
+                    .split(/\s+/)
+                    .filter(Boolean)
+                    .map(Number);
+            }
+
+            canvas.width = w;
+            canvas.height = h;
+
+            const img = ctx.createImageData(w, h);
+
+            if (rgbMode.checked) {
+                const pixels = Math.min(w * h, Math.floor(nums.length / 3));
+
+                for (let i = 0; i &lt; pixels; i++) {
+                    img.data[4 * i + 0] = clamp(nums[3 * i + 0]);
+                    img.data[4 * i + 1] = clamp(nums[3 * i + 1]);
+                    img.data[4 * i + 2] = clamp(nums[3 * i + 2]);
+                    img.data[4 * i + 3] = 255;
+                }
+            }
+            else {
+                const pixels = Math.min(w * h, nums.length);
+
+                for (let i = 0; i &lt; pixels; i++) {
+                    const v = clamp(nums[i]);
+
+                    img.data[4 * i + 0] = v;
+                    img.data[4 * i + 1] = v;
+                    img.data[4 * i + 2] = v;
+                    img.data[4 * i + 3] = 255;
+                }
+            }
+
+            ctx.putImageData(img, 0, 0);
+
+            const scale = Math.max(
+                1,
+                Math.floor(
+                    Math.min(
+                        (window.innerWidth * 0.55) / w,
+                        (window.innerHeight * 0.9) / h
+                    )
+                )
+            );
+
+            canvas.style.width = (w * scale) + "px";
+            canvas.style.height = (h * scale) + "px";
+        }
+
+        textarea.addEventListener("input", render);
+        widthBox.addEventListener("input", render);
+        heightBox.addEventListener("input", render);
+        rgbMode.addEventListener("change", render);
+        window.addEventListener("resize", render);
+
+        render();
+
+    &lt;/script&gt;
+
+</content><category term="extra"/></entry></feed>
