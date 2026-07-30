@@ -19,7 +19,7 @@ AUTHOR_FEED_RSS = None
 LINKS = (
     ("Publications", "/category/publications.html"),
     ("Projects", "/category/projects.html"),
-    ("Courses", "/pages/courses.html"),
+    ("Courses", "/category/courses.html"),
     ("Resume", "/pages/resume.html"),
 )
 
