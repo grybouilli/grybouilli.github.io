@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Image Viewer</title>
+    <meta name="date" content="2026-09-07" />
+    <meta name="url" content="extra/" />
+    <meta name="save_as" content="extra/img_visualizer.html" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            font-family: sans-serif;
+        }
+
+        #container {
+            display: flex;
+            height: 100vh;
+        }
+
+        #left {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #bbb;
+        }
+
+        #controls {
+            padding: 10px;
+            background: #f0f0f0;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        input[type=number] {
+            width: 70px;
+        }
+
+        textarea {
+            flex: 1;
+            resize: none;
+            border: none;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            outline: none;
+        }
+
+        #right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ddd;
+            overflow: auto;
+        }
+
+        canvas {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            border: 1px solid black;
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+
+        <div id="left">
+
+            <div id="controls">
+                Width:
+                <input id="width" type="number" value="16" min="1">
+
+                Height:
+                <input id="height" type="number" value="16" min="1">
+
+                <label>
+                    <input id="rgbMode" type="checkbox">
+                    RGB
+                </label>
+            </div>
+
+            <textarea id="data">
+255 0 0 255 128 0 255 255 0 0 255 0
+0 255 255 0 0 255 255 0 255 255 255 255
+</textarea>
+
+        </div>
+
+        <div id="right">
+            <canvas id="canvas"></canvas>
+        </div>
+
+    </div>
+
+    <script>
+
+        const textarea = document.getElementById("data");
+        const widthBox = document.getElementById("width");
+        const heightBox = document.getElementById("height");
+        const rgbMode = document.getElementById("rgbMode");
+
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        function clamp(v) {
+            return Math.max(0, Math.min(255, v | 0));
+        }
+
+        function render() {
+            const w = parseInt(widthBox.value);
+            const h = parseInt(heightBox.value);
+
+            if (!w || !h)
+                return;
+
+            let nums;
+
+            if (rgbMode.checked) {
+                // Matches "(r,g,b)", "(r, g, b)", etc.
+                nums = [];
+                const regex = /\(\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/g;
+
+                let m;
+                while ((m = regex.exec(textarea.value)) !== null) {
+                    nums.push(
+                        clamp(Number(m[1])),
+                        clamp(Number(m[2])),
+                        clamp(Number(m[3]))
+                    );
+                }
+            }
+            else {
+                nums = textarea.value
+                    .trim()
+                    .split(/\s+/)
+                    .filter(Boolean)
+                    .map(Number);
+            }
+
+            canvas.width = w;
+            canvas.height = h;
+
+            const img = ctx.createImageData(w, h);
+
+            if (rgbMode.checked) {
+                const pixels = Math.min(w * h, Math.floor(nums.length / 3));
+
+                for (let i = 0; i < pixels; i++) {
+                    img.data[4 * i + 0] = clamp(nums[3 * i + 0]);
+                    img.data[4 * i + 1] = clamp(nums[3 * i + 1]);
+                    img.data[4 * i + 2] = clamp(nums[3 * i + 2]);
+                    img.data[4 * i + 3] = 255;
+                }
+            }
+            else {
+                const pixels = Math.min(w * h, nums.length);
+
+                for (let i = 0; i < pixels; i++) {
+                    const v = clamp(nums[i]);
+
+                    img.data[4 * i + 0] = v;
+                    img.data[4 * i + 1] = v;
+                    img.data[4 * i + 2] = v;
+                    img.data[4 * i + 3] = 255;
+                }
+            }
+
+            ctx.putImageData(img, 0, 0);
+
+            const scale = Math.max(
+                1,
+                Math.floor(
+                    Math.min(
+                        (window.innerWidth * 0.55) / w,
+                        (window.innerHeight * 0.9) / h
+                    )
+                )
+            );
+
+            canvas.style.width = (w * scale) + "px";
+            canvas.style.height = (h * scale) + "px";
+        }
+
+        textarea.addEventListener("input", render);
+        widthBox.addEventListener("input", render);
+        heightBox.addEventListener("input", render);
+        rgbMode.addEventListener("change", render);
+        window.addEventListener("resize", render);
+
+        render();
+
+    </script>
+
+</body>
+
+</html>

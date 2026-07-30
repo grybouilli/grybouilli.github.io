@@ -1,3 +1,13 @@
+import os
+
+
+def read_file(article):
+    with open(article.source_path, "r") as f:
+        return f.read()
+
+
+JINJA_FILTERS = {"read_file": read_file}
+
 AUTHOR = "Nicolas Gry"
 SITENAME = "Nicolas Gry"
 SITEURL = ""
@@ -43,8 +53,8 @@ BIO = """
 I'm Nicolas Gry, PhD Student at Inria de Lyon, France. My research focuses on AI-based audio DSPs used in real-time embedded platforms.
 """
 
-STATIC_PATHS = ["static", "images"]
-EXTRA_PATH_METADATA = {}
+STATIC_PATHS = ["static", "images", "extra"]
 RELATIVE_URLS = True
 DISPLAY_PAGES_ON_MENU = False
 THEME_CSS_OVERRIDES = ["theme/css/pulse.css"]
+EXTRA_PATH_METADATA = {}
