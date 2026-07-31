@@ -245,6 +245,7 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://grybouilli.github.io/extra/img_visualizer.html"&gt;img_visualizer&lt;/a&gt;: a web interface to visualize images from their pixel values. B/W and RGB mode available.&lt;/li&gt;
 &lt;/ul&gt;</content><category term="Courses"/></entry><entry><title>Multi-Voice Sound Synthesis with Arduino</title><link href="https://grybouilli.github.io/multi-voice-sound-synthesis-with-arduino.html" rel="alternate"/><published>2024-08-30T00:00:00+02:00</published><updated>2024-08-30T00:00:00+02:00</updated><author><name>Nicolas Gry</name></author><id>tag:grybouilli.github.io,2024-08-30:/multi-voice-sound-synthesis-with-arduino.html</id><summary type="html">&lt;p&gt;This is a personal project. The idea was to explore Direct Digital Synthesis (DDS) using the Atmega 328p's timers and interrupts. A full explanation article is avaible on &lt;a href="https://medium.com/@grybouilli/multi-voice-sound-generation-with-arduino-9ae01ed0e441"&gt;Medium&lt;/a&gt; and the source code is available on &lt;a href="https://github.com/grybouilli/multi-voice-for-Arduino"&gt;Github&lt;/a&gt;.&lt;/p&gt;
