@@ -30,3 +30,5 @@ Category: Courses
 |Windows 11| MacOS | Linux|
 |------|------|------|
 |[image_exporter for Windows]()| [image_exporter for MacOS](https://filesender.renater.fr/download.php?token=10850b44-f11f-4290-a2ce-eca4dd51bcb3&files_ids=76091335)| [image_exporter for Linux](https://filesender.renater.fr/download.php?token=f0ba5af4-ee99-45b1-9627-38a456fb5678&files_ids=76090705)|
+
+* [img_visualizer](https://grybouilli.github.io/extra/img_visualizer.html): a web interface to visualize images from their pixel values. B/W and RGB mode available.
