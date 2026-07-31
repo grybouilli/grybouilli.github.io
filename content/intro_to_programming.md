@@ -4,6 +4,12 @@ Category: Courses
 
 # About
 
+"Introduction to Programming" is a class I teach at the Université Jean Monnet de Saint-Étienne, to first year Master students in the [Digicrea Master](https://master-digicrea.univ-st-etienne.fr/en/index.html) and the [RIM Master](https://www.univ-st-etienne.fr/fr/formation/master-XB/master-XB/master-arts-parcours-creation-contemporaine-et-nouvelles-technologies-option-realisateur-en-informatique-musicale-option-arts-numeriques-KX4SMCQZ.html). The students primarily come from an artistic background and have supposedly no knowledge in computing, and very light brackground in mathematics.
+
+The class aims to introduce the foundation of programming by learning the basics of C++. The class tackles notions of variables, types and scope, boolean operations and logic, conditional statements and loops, functions, as well as data structure such as matrices, arrays and vectors. A part of the class focuses on developers' tools such as compilation with clang, library linking, and build system with cmake as an example. Scripting languages are lightly covered, with Javascript as an example.
+
+The practise examples and assignment revolve around image processing and audio / music, so as to make a direct link with the rest of their curriculum.
+
 # Course content
 ## Lectures  
 
