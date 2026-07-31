@@ -7,20 +7,19 @@
 
             &lt;div id="controls"&gt;
                 Width:
-                &lt;input id="width" type="number" value="16" min="1"&gt;
+                &lt;input id="width" type="number" value="47" min="1"&gt;
 
                 Height:
-                &lt;input id="height" type="number" value="16" min="1"&gt;
+                &lt;input id="height" type="number" value="32" min="1"&gt;
 
                 &lt;label&gt;
-                    &lt;input id="rgbMode" type="checkbox"&gt;
+                    &lt;input id="rgbMode" type="checkbox" checked&gt;
                     RGB
                 &lt;/label&gt;
             &lt;/div&gt;
 
             &lt;textarea id="data"&gt;
-255 0 0 255 128 0 255 255 0 0 255 0
-0 255 255 0 0 255 255 0 255 255 255 255
+(255,0,0)(255,125,0)(255,255,0)(30,220,30)(0,70,200)(160,60,220)
 &lt;/textarea&gt;
 
         &lt;/div&gt;
@@ -38,7 +37,8 @@
         const heightBox = document.getElementById("height");
         const rgbMode = document.getElementById("rgbMode");
 
-        const canvas = document …&lt;/script&gt;</summary><content type="html">
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext …&lt;/script&gt;</summary><content type="html">
 
     &lt;div id="container"&gt;
 
@@ -46,20 +46,19 @@
 
             &lt;div id="controls"&gt;
                 Width:
-                &lt;input id="width" type="number" value="16" min="1"&gt;
+                &lt;input id="width" type="number" value="47" min="1"&gt;
 
                 Height:
-                &lt;input id="height" type="number" value="16" min="1"&gt;
+                &lt;input id="height" type="number" value="32" min="1"&gt;
 
                 &lt;label&gt;
-                    &lt;input id="rgbMode" type="checkbox"&gt;
+                    &lt;input id="rgbMode" type="checkbox" checked&gt;
                     RGB
                 &lt;/label&gt;
             &lt;/div&gt;
 
             &lt;textarea id="data"&gt;
-255 0 0 255 128 0 255 255 0 0 255 0
-0 255 255 0 0 255 255 0 255 255 255 255
+(255,0,0)(255,125,0)(255,255,0)(30,220,30)(0,70,200)(160,60,220)
 &lt;/textarea&gt;
 
         &lt;/div&gt;
