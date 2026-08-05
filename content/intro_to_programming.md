@@ -18,6 +18,12 @@ The practise examples and assignment revolve around image processing and audio /
 |[Lecture 1]()| [Exercises 1]()| [Assignment 1]()|
 
 ## Extras 
+#### Exercises resources
+#### Assignment resources
+| Assignment      | Resource       |
+| --------------- | ---------------- |
+| Assignment 4: Problem 1 | [Windows]({static}courses/intro_to_programming/a4/windows/problem1.zip) [MacOS]({static}courses/intro_to_programming/a4/macos/problem1.zip) [Linux]({static}courses/intro_to_programming/a4/macos/problem1.zip)|
+
 #### Documentation
 
 * [Guide to install CLang and CMake on Windows]({static}courses/intro_to_programming/windows_build_tools_installation_steps.pdf)
