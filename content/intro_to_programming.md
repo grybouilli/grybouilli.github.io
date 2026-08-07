@@ -22,9 +22,9 @@ The practise examples and assignment revolve around image processing and audio /
 | Practise | Problem | Resource |
 | ---------- | -------- | -------- |
 | Practise 9 | Problem 1.3 | [Archive]({static}courses/intro_to_programming/p9/1.3.alice.zip) | 
-| Practise 9 | Problem 1.3 | [Archive]({static}courses/intro_to_programming/p9/2.2.alice.zip) | 
-| Practise 9 | Problem 1.3 | [Archive]({static}courses/intro_to_programming/p9/3.1.alice.zip) | 
-| Practise 9 | Problem 1.3 | [Archive]({static}courses/intro_to_programming/p9/4.1.alice.zip) | 
+| Practise 9 | Problem 2.2 | [Archive]({static}courses/intro_to_programming/p9/2.2.alice.zip) | 
+| Practise 9 | Problem 3.1 | [Archive]({static}courses/intro_to_programming/p9/3.1.alice.zip) | 
+| Practise 9 | Problem 4.1 | [Archive]({static}courses/intro_to_programming/p9/4.1.alice.zip) | 
 
 <br>
 #### Assignment resources
