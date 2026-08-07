@@ -19,12 +19,21 @@ The practise examples and assignment revolve around image processing and audio /
 
 ## Extras 
 #### Exercises resources
+| Practise | Problem | Resource |
+| ---------- | -------- | -------- |
+| Practise 9 | Problem 1.3 | [Archive]({static}courses/intro_to_programming/p9/1.3.alice.zip) | 
+| Practise 9 | Problem 1.3 | [Archive]({static}courses/intro_to_programming/p9/2.2.alice.zip) | 
+| Practise 9 | Problem 1.3 | [Archive]({static}courses/intro_to_programming/p9/3.1.alice.zip) | 
+| Practise 9 | Problem 1.3 | [Archive]({static}courses/intro_to_programming/p9/4.1.alice.zip) | 
+
+<br>
 #### Assignment resources
 | Assignment      | Resource       |
 | --------------- | ---------------- |
 | Assignment 4: Exercise 1 | [Windows]({static}courses/intro_to_programming/a4/windows/problem1.zip) [MacOS]({static}courses/intro_to_programming/a4/macos/problem1.zip) [Linux]({static}courses/intro_to_programming/a4/macos/problem1.zip)|
 | Assignment 4: Exercise 2 | [Windows]({static}courses/intro_to_programming/a4/windows/problem2.zip) [MacOS]({static}courses/intro_to_programming/a4/macos/problem2.zip) [Linux]({static}courses/intro_to_programming/a4/macos/problem2.zip)|
 
+<br>
 #### Documentation
 
 * [Guide to install CLang and CMake on Windows]({static}courses/intro_to_programming/windows_build_tools_installation_steps.pdf)
