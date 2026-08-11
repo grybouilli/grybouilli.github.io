@@ -1,342 +1,292 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Nicolas Gry - extra</title><link href="https://grybouilli.github.io/" rel="alternate"/><link href="https://grybouilli.github.io/feeds/extra.atom.xml" rel="self"/><id>https://grybouilli.github.io/</id><updated>2026-09-07T00:00:00+02:00</updated><subtitle>PhD Student in Computer Science · Inria de Lyon</subtitle><entry><title>Image Viewer</title><link href="https://grybouilli.github.io/extra/" rel="alternate"/><published>2026-09-07T00:00:00+02:00</published><updated>2026-09-07T00:00:00+02:00</updated><author><name>Nicolas Gry</name></author><id>tag:grybouilli.github.io,2026-09-07:/extra/</id><summary type="html">
+<!DOCTYPE html>
 
-    &lt;div id="container"&gt;
+<html lang="en">
 
-        &lt;div id="left"&gt;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="save_as" content="extra/image_exporter.html" />
+    <meta name="date" content="2026-09-07" />
+    <meta name="url" content="extra/" />
 
-            &lt;div id="controls"&gt;
-                Width:
-                &lt;input id="width" type="number" value="47" min="1"&gt;
+    <title>Image ↔ XLSX Converter</title>
 
-                Height:
-                &lt;input id="height" type="number" value="32" min="1"&gt;
+    <!-- SheetJS -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
-                &lt;label&gt;
-                    &lt;input id="rgbMode" type="checkbox" checked&gt;
-                    RGB
-                &lt;/label&gt;
-            &lt;/div&gt;
-
-            &lt;textarea id="data"&gt;
-(255,0,0)(255,125,0)(255,255,0)(30,220,30)(0,70,200)(160,60,220)
-&lt;/textarea&gt;
-
-        &lt;/div&gt;
-
-        &lt;div id="right"&gt;
-            &lt;canvas id="canvas"&gt;&lt;/canvas&gt;
-        &lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;script&gt;
-
-        const textarea = document.getElementById("data");
-        const widthBox = document.getElementById("width");
-        const heightBox = document.getElementById("height");
-        const rgbMode = document.getElementById("rgbMode");
-
-        const canvas = document.getElementById("canvas");
-        const ctx = canvas.getContext …&lt;/script&gt;</summary><content type="html">
-
-    &lt;div id="container"&gt;
-
-        &lt;div id="left"&gt;
-
-            &lt;div id="controls"&gt;
-                Width:
-                &lt;input id="width" type="number" value="47" min="1"&gt;
-
-                Height:
-                &lt;input id="height" type="number" value="32" min="1"&gt;
-
-                &lt;label&gt;
-                    &lt;input id="rgbMode" type="checkbox" checked&gt;
-                    RGB
-                &lt;/label&gt;
-            &lt;/div&gt;
-
-            &lt;textarea id="data"&gt;
-(255,0,0)(255,125,0)(255,255,0)(30,220,30)(0,70,200)(160,60,220)
-&lt;/textarea&gt;
-
-        &lt;/div&gt;
-
-        &lt;div id="right"&gt;
-            &lt;canvas id="canvas"&gt;&lt;/canvas&gt;
-        &lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;script&gt;
-
-        const textarea = document.getElementById("data");
-        const widthBox = document.getElementById("width");
-        const heightBox = document.getElementById("height");
-        const rgbMode = document.getElementById("rgbMode");
-
-        const canvas = document.getElementById("canvas");
-        const ctx = canvas.getContext("2d");
-
-        function clamp(v) {
-            return Math.max(0, Math.min(255, v | 0));
+    <style>
+        * {
+            box-sizing: border-box;
         }
 
-        function render() {
-            const w = parseInt(widthBox.value);
-            const h = parseInt(heightBox.value);
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+            background: #f3f4f6;
+            color: #1f2937;
 
-            if (!w || !h)
-                return;
-
-            let nums;
-
-            if (rgbMode.checked) {
-                // Matches "(r,g,b)", "(r, g, b)", etc.
-                nums = [];
-                const regex = /\(\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(-?\d+)\s*\)/g;
-
-                let m;
-                while ((m = regex.exec(textarea.value)) !== null) {
-                    nums.push(
-                        clamp(Number(m[1])),
-                        clamp(Number(m[2])),
-                        clamp(Number(m[3]))
-                    );
-                }
-            }
-            else {
-                nums = textarea.value
-                    .trim()
-                    .split(/\s+/)
-                    .filter(Boolean)
-                    .map(Number);
-            }
-
-            canvas.width = w;
-            canvas.height = h;
-
-            const img = ctx.createImageData(w, h);
-
-            if (rgbMode.checked) {
-                const pixels = Math.min(w * h, Math.floor(nums.length / 3));
-
-                for (let i = 0; i &lt; pixels; i++) {
-                    img.data[4 * i + 0] = clamp(nums[3 * i + 0]);
-                    img.data[4 * i + 1] = clamp(nums[3 * i + 1]);
-                    img.data[4 * i + 2] = clamp(nums[3 * i + 2]);
-                    img.data[4 * i + 3] = 255;
-                }
-            }
-            else {
-                const pixels = Math.min(w * h, nums.length);
-
-                for (let i = 0; i &lt; pixels; i++) {
-                    const v = clamp(nums[i]);
-
-                    img.data[4 * i + 0] = v;
-                    img.data[4 * i + 1] = v;
-                    img.data[4 * i + 2] = v;
-                    img.data[4 * i + 3] = 255;
-                }
-            }
-
-            ctx.putImageData(img, 0, 0);
-
-            const scale = Math.max(
-                1,
-                Math.floor(
-                    Math.min(
-                        (window.innerWidth * 0.55) / w,
-                        (window.innerHeight * 0.9) / h
-                    )
-                )
-            );
-
-            canvas.style.width = (w * scale) + "px";
-            canvas.style.height = (h * scale) + "px";
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
         }
 
-        textarea.addEventListener("input", render);
-        widthBox.addEventListener("input", render);
-        heightBox.addEventListener("input", render);
-        rgbMode.addEventListener("change", render);
-        window.addEventListener("resize", render);
+        .container {
+            width: min(1000px, 100%);
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
 
-        render();
+        h1 {
+            margin: 0 0 25px;
+            text-align: center;
+            font-size: 26px;
+        }
 
-    &lt;/script&gt;
+        /* Mode selection */
 
-</content><category term="extra"/></entry><entry><title>Image ↔ XLSX Converter</title><link href="https://grybouilli.github.io/extra/" rel="alternate"/><published>2026-09-07T00:00:00+02:00</published><updated>2026-09-07T00:00:00+02:00</updated><author><name>Nicolas Gry</name></author><id>tag:grybouilli.github.io,2026-09-07:/extra/</id><summary type="html">
+        .mode {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
 
-    &lt;div class="container"&gt;
+        .mode label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .mode input {
+            margin-right: 7px;
+        }
+
+        /* File controls */
+
+        .file-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .file-row input[type="text"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        button,
+        .file-button {
+            border: none;
+            border-radius: 6px;
+            padding: 10px 18px;
+            font-size: 14px;
+            cursor: pointer;
+            background: #2563eb;
+            color: white;
+        }
+
+        button:hover,
+        .file-button:hover {
+            background: #1d4ed8;
+        }
+
+        .execute {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Output format */
+
+        .format-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .format-row select {
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+        }
+
+        /* Drop zone */
+
+        .drop-zone {
+            margin-top: 20px;
+            padding: 30px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            text-align: center;
+            color: #64748b;
+            transition: 0.15s;
+        }
+
+        .drop-zone.dragover {
+            border-color: #2563eb;
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        /* Status */
+
+        .status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .status.success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status.error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status.processing {
+            display: block;
+            background: #e0f2fe;
+            color: #075985;
+        }
+
+        /* Preview */
+
+        .preview {
+            margin-top: 25px;
+            display: none;
+        }
+
+        .preview h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .preview img {
+            max-width: 100%;
+            max-height: 500px;
+            border: 1px solid #d1d5db;
+            image-rendering: auto;
+        }
+
+        @media (max-width: 700px) {
+            .file-row {
+                grid-template-columns: 1fr;
+            }
+
+            .mode {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+    </style>
 
 
-        &lt;h1&gt;Image ↔ XLSX Converter&lt;/h1&gt;
+</head>
 
-        &lt;!-- Conversion mode --&gt;
-        &lt;div class="mode"&gt;
+<body>
 
-            &lt;label&gt;
-                &lt;input type="radio" name="mode" value="toxlsx" checked&gt;
+    <div class="container">
+
+
+        <h1>Image ↔ XLSX Converter</h1>
+
+        <!-- Conversion mode -->
+        <div class="mode">
+
+            <label>
+                <input type="radio" name="mode" value="toxlsx" checked>
                 From image to XLSX
-            &lt;/label&gt;
+            </label>
 
-            &lt;label&gt;
-                &lt;input type="radio" name="mode" value="toimage"&gt;
+            <label>
+                <input type="radio" name="mode" value="toimage">
                 From XLSX to image
-            &lt;/label&gt;
+            </label>
 
-        &lt;/div&gt;
+        </div>
 
-        &lt;!-- Input --&gt;
-        &lt;div class="file-row"&gt;
+        <!-- Input -->
+        <div class="file-row">
 
-            &lt;input type="text" id="inputPath" placeholder="Input file..." readonly&gt;
+            <input type="text" id="inputPath" placeholder="Input file..." readonly>
 
-            &lt;label class="file-button"&gt;
+            <label class="file-button">
                 Browse...
-                &lt;input type="file" id="inputFile"&gt;
-            &lt;/label&gt;
+                <input type="file" id="inputFile">
+            </label>
 
-        &lt;/div&gt;
+        </div>
 
-        &lt;!-- Output --&gt;
-        &lt;div class="file-row"&gt;
+        <!-- Output -->
+        <div class="file-row">
 
-            &lt;input type="text" id="outputPath" placeholder="Output file (optional)"&gt;
+            <input type="text" id="outputPath" placeholder="Output file (optional)">
 
-            &lt;button id="outputButton"&gt;
+            <button id="outputButton">
                 Choose output...
-            &lt;/button&gt;
+            </button>
 
-        &lt;/div&gt;
+        </div>
 
-        &lt;!-- Image output format --&gt;
-        &lt;div class="format-row" id="imageFormatRow"&gt;
+        <!-- Image output format -->
+        <div class="format-row" id="imageFormatRow">
 
-            &lt;label for="imageFormat"&gt;
+            <label for="imageFormat">
                 Image format:
-            &lt;/label&gt;
+            </label>
 
-            &lt;select id="imageFormat"&gt;
-                &lt;option value="png"&gt;PNG&lt;/option&gt;
-                &lt;option value="jpeg"&gt;JPEG&lt;/option&gt;
-            &lt;/select&gt;
+            <select id="imageFormat">
+                <option value="png">PNG</option>
+                <option value="jpeg">JPEG</option>
+            </select>
 
-        &lt;/div&gt;
+        </div>
 
-        &lt;!-- Drop zone --&gt;
-        &lt;div class="drop-zone" id="dropZone"&gt;
+        <!-- Drop zone -->
+        <div class="drop-zone" id="dropZone">
             Drop an image or XLSX file here
-        &lt;/div&gt;
+        </div>
 
-        &lt;!-- Execute --&gt;
-        &lt;button class="execute" id="execute"&gt;
+        <!-- Execute -->
+        <button class="execute" id="execute">
             Execute
-        &lt;/button&gt;
+        </button>
 
-        &lt;!-- Status --&gt;
-        &lt;div class="status" id="status"&gt;&lt;/div&gt;
+        <!-- Status -->
+        <div class="status" id="status"></div>
 
-        &lt;!-- Preview --&gt;
-        &lt;div class="preview" id="preview"&gt;
-            &lt;h2&gt;Preview&lt;/h2&gt;
-            &lt;img id="previewImage" alt="Image preview"&gt;
-        &lt;/div&gt;
-
-
-    &lt;/div&gt;
-
-    &lt;script&gt;
-
-        const inputFile = document.getElementById("inputFile");
-        const inputPath = document.getElementById("inputPath");
-        const outputPath = document.getElementById("outputPath");
-        const outputButton = document.getElementById("outputButton");
-        const executeButton = document …&lt;/script&gt;</summary><content type="html">
-
-    &lt;div class="container"&gt;
+        <!-- Preview -->
+        <div class="preview" id="preview">
+            <h2>Preview</h2>
+            <img id="previewImage" alt="Image preview">
+        </div>
 
 
-        &lt;h1&gt;Image ↔ XLSX Converter&lt;/h1&gt;
+    </div>
 
-        &lt;!-- Conversion mode --&gt;
-        &lt;div class="mode"&gt;
-
-            &lt;label&gt;
-                &lt;input type="radio" name="mode" value="toxlsx" checked&gt;
-                From image to XLSX
-            &lt;/label&gt;
-
-            &lt;label&gt;
-                &lt;input type="radio" name="mode" value="toimage"&gt;
-                From XLSX to image
-            &lt;/label&gt;
-
-        &lt;/div&gt;
-
-        &lt;!-- Input --&gt;
-        &lt;div class="file-row"&gt;
-
-            &lt;input type="text" id="inputPath" placeholder="Input file..." readonly&gt;
-
-            &lt;label class="file-button"&gt;
-                Browse...
-                &lt;input type="file" id="inputFile"&gt;
-            &lt;/label&gt;
-
-        &lt;/div&gt;
-
-        &lt;!-- Output --&gt;
-        &lt;div class="file-row"&gt;
-
-            &lt;input type="text" id="outputPath" placeholder="Output file (optional)"&gt;
-
-            &lt;button id="outputButton"&gt;
-                Choose output...
-            &lt;/button&gt;
-
-        &lt;/div&gt;
-
-        &lt;!-- Image output format --&gt;
-        &lt;div class="format-row" id="imageFormatRow"&gt;
-
-            &lt;label for="imageFormat"&gt;
-                Image format:
-            &lt;/label&gt;
-
-            &lt;select id="imageFormat"&gt;
-                &lt;option value="png"&gt;PNG&lt;/option&gt;
-                &lt;option value="jpeg"&gt;JPEG&lt;/option&gt;
-            &lt;/select&gt;
-
-        &lt;/div&gt;
-
-        &lt;!-- Drop zone --&gt;
-        &lt;div class="drop-zone" id="dropZone"&gt;
-            Drop an image or XLSX file here
-        &lt;/div&gt;
-
-        &lt;!-- Execute --&gt;
-        &lt;button class="execute" id="execute"&gt;
-            Execute
-        &lt;/button&gt;
-
-        &lt;!-- Status --&gt;
-        &lt;div class="status" id="status"&gt;&lt;/div&gt;
-
-        &lt;!-- Preview --&gt;
-        &lt;div class="preview" id="preview"&gt;
-            &lt;h2&gt;Preview&lt;/h2&gt;
-            &lt;img id="previewImage" alt="Image preview"&gt;
-        &lt;/div&gt;
-
-
-    &lt;/div&gt;
-
-    &lt;script&gt;
+    <script>
 
         const inputFile = document.getElementById("inputFile");
         const inputPath = document.getElementById("inputPath");
@@ -369,7 +319,7 @@
 
         function getExtension(filename) {
             const parts = filename.split(".");
-            if (parts.length &lt; 2) {
+            if (parts.length < 2) {
                 return "";
             }
 
@@ -406,9 +356,9 @@
 
         document.querySelectorAll(
             'input[name="mode"]'
-        ).forEach(radio =&gt; {
+        ).forEach(radio => {
 
-            radio.addEventListener("change", () =&gt; {
+            radio.addEventListener("change", () => {
 
                 const mode = getMode();
 
@@ -426,7 +376,7 @@
          * Input file
          * ------------------------------------------------- */
 
-        inputFile.addEventListener("change", () =&gt; {
+        inputFile.addEventListener("change", () => {
 
             if (!inputFile.files.length) {
                 return;
@@ -511,7 +461,7 @@
          * The text field still allows the desired filename.
          * ------------------------------------------------- */
 
-        outputButton.addEventListener("click", () =&gt; {
+        outputButton.addEventListener("click", () => {
 
             outputPath.focus();
             outputPath.select();
@@ -520,10 +470,10 @@
 
 
         /* -------------------------------------------------
-         * Drag &amp; drop
+         * Drag & drop
          * ------------------------------------------------- */
 
-        dropZone.addEventListener("dragover", event =&gt; {
+        dropZone.addEventListener("dragover", event => {
 
             event.preventDefault();
 
@@ -532,14 +482,14 @@
         });
 
 
-        dropZone.addEventListener("dragleave", () =&gt; {
+        dropZone.addEventListener("dragleave", () => {
 
             dropZone.classList.remove("dragover");
 
         });
 
 
-        dropZone.addEventListener("drop", event =&gt; {
+        dropZone.addEventListener("drop", event => {
 
             event.preventDefault();
 
@@ -557,7 +507,7 @@
 
 
         /* -------------------------------------------------
-         * Image -&gt; XLSX
+         * Image -> XLSX
          * ------------------------------------------------- */
 
         async function imageToXlsx(file, filename) {
@@ -600,13 +550,13 @@
              * R G B A R G B A ...
              */
 
-            for (let y = 0; y &lt; bitmap.height; y++) {
+            for (let y = 0; y < bitmap.height; y++) {
 
                 const redRow = [];
                 const greenRow = [];
                 const blueRow = [];
 
-                for (let x = 0; x &lt; bitmap.width; x++) {
+                for (let x = 0; x < bitmap.width; x++) {
 
                     const index =
                         (y * bitmap.width + x) * 4;
@@ -655,7 +605,7 @@
 
 
         /* -------------------------------------------------
-         * XLSX -&gt; Image
+         * XLSX -> Image
          * ------------------------------------------------- */
 
         async function xlsxToImage(file, filename) {
@@ -755,7 +705,7 @@
                 );
             }
 
-            for (let y = 0; y &lt; height; y++) {
+            for (let y = 0; y < height; y++) {
 
                 if (
                     green[y].length !== width ||
@@ -778,9 +728,9 @@
                     width * height * 4
                 );
 
-            for (let y = 0; y &lt; height; y++) {
+            for (let y = 0; y < height; y++) {
 
-                for (let x = 0; x &lt; width; x++) {
+                for (let x = 0; x < width; x++) {
 
                     const index =
                         (y * width + x) * 4;
@@ -917,7 +867,7 @@
 
         executeButton.addEventListener(
             "click",
-            async () =&gt; {
+            async () => {
 
                 clearStatus();
 
@@ -956,7 +906,7 @@
 
 
                     /*
-                     * Validate image -&gt; XLSX.
+                     * Validate image -> XLSX.
                      */
 
                     if (mode === "toxlsx") {
@@ -1008,7 +958,7 @@
 
 
                     /*
-                     * Validate XLSX -&gt; image.
+                     * Validate XLSX -> image.
                      */
 
                     else {
@@ -1084,6 +1034,8 @@
 
         imageFormatRow.style.display = "none";
 
-    &lt;/script&gt;
+    </script>
 
-</content><category term="extra"/></entry></feed>
+</body>
+
+</html>

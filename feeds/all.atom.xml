@@ -168,6 +168,924 @@
 
     &lt;/script&gt;
 
+</content><category term="extra"/></entry><entry><title>Image ↔ XLSX Converter</title><link href="https://grybouilli.github.io/extra/" rel="alternate"/><published>2026-09-07T00:00:00+02:00</published><updated>2026-09-07T00:00:00+02:00</updated><author><name>Nicolas Gry</name></author><id>tag:grybouilli.github.io,2026-09-07:/extra/</id><summary type="html">
+
+    &lt;div class="container"&gt;
+
+
+        &lt;h1&gt;Image ↔ XLSX Converter&lt;/h1&gt;
+
+        &lt;!-- Conversion mode --&gt;
+        &lt;div class="mode"&gt;
+
+            &lt;label&gt;
+                &lt;input type="radio" name="mode" value="toxlsx" checked&gt;
+                From image to XLSX
+            &lt;/label&gt;
+
+            &lt;label&gt;
+                &lt;input type="radio" name="mode" value="toimage"&gt;
+                From XLSX to image
+            &lt;/label&gt;
+
+        &lt;/div&gt;
+
+        &lt;!-- Input --&gt;
+        &lt;div class="file-row"&gt;
+
+            &lt;input type="text" id="inputPath" placeholder="Input file..." readonly&gt;
+
+            &lt;label class="file-button"&gt;
+                Browse...
+                &lt;input type="file" id="inputFile"&gt;
+            &lt;/label&gt;
+
+        &lt;/div&gt;
+
+        &lt;!-- Output --&gt;
+        &lt;div class="file-row"&gt;
+
+            &lt;input type="text" id="outputPath" placeholder="Output file (optional)"&gt;
+
+            &lt;button id="outputButton"&gt;
+                Choose output...
+            &lt;/button&gt;
+
+        &lt;/div&gt;
+
+        &lt;!-- Image output format --&gt;
+        &lt;div class="format-row" id="imageFormatRow"&gt;
+
+            &lt;label for="imageFormat"&gt;
+                Image format:
+            &lt;/label&gt;
+
+            &lt;select id="imageFormat"&gt;
+                &lt;option value="png"&gt;PNG&lt;/option&gt;
+                &lt;option value="jpeg"&gt;JPEG&lt;/option&gt;
+            &lt;/select&gt;
+
+        &lt;/div&gt;
+
+        &lt;!-- Drop zone --&gt;
+        &lt;div class="drop-zone" id="dropZone"&gt;
+            Drop an image or XLSX file here
+        &lt;/div&gt;
+
+        &lt;!-- Execute --&gt;
+        &lt;button class="execute" id="execute"&gt;
+            Execute
+        &lt;/button&gt;
+
+        &lt;!-- Status --&gt;
+        &lt;div class="status" id="status"&gt;&lt;/div&gt;
+
+        &lt;!-- Preview --&gt;
+        &lt;div class="preview" id="preview"&gt;
+            &lt;h2&gt;Preview&lt;/h2&gt;
+            &lt;img id="previewImage" alt="Image preview"&gt;
+        &lt;/div&gt;
+
+
+    &lt;/div&gt;
+
+    &lt;script&gt;
+
+        const inputFile = document.getElementById("inputFile");
+        const inputPath = document.getElementById("inputPath");
+        const outputPath = document.getElementById("outputPath");
+        const outputButton = document.getElementById("outputButton");
+        const executeButton = document …&lt;/script&gt;</summary><content type="html">
+
+    &lt;div class="container"&gt;
+
+
+        &lt;h1&gt;Image ↔ XLSX Converter&lt;/h1&gt;
+
+        &lt;!-- Conversion mode --&gt;
+        &lt;div class="mode"&gt;
+
+            &lt;label&gt;
+                &lt;input type="radio" name="mode" value="toxlsx" checked&gt;
+                From image to XLSX
+            &lt;/label&gt;
+
+            &lt;label&gt;
+                &lt;input type="radio" name="mode" value="toimage"&gt;
+                From XLSX to image
+            &lt;/label&gt;
+
+        &lt;/div&gt;
+
+        &lt;!-- Input --&gt;
+        &lt;div class="file-row"&gt;
+
+            &lt;input type="text" id="inputPath" placeholder="Input file..." readonly&gt;
+
+            &lt;label class="file-button"&gt;
+                Browse...
+                &lt;input type="file" id="inputFile"&gt;
+            &lt;/label&gt;
+
+        &lt;/div&gt;
+
+        &lt;!-- Output --&gt;
+        &lt;div class="file-row"&gt;
+
+            &lt;input type="text" id="outputPath" placeholder="Output file (optional)"&gt;
+
+            &lt;button id="outputButton"&gt;
+                Choose output...
+            &lt;/button&gt;
+
+        &lt;/div&gt;
+
+        &lt;!-- Image output format --&gt;
+        &lt;div class="format-row" id="imageFormatRow"&gt;
+
+            &lt;label for="imageFormat"&gt;
+                Image format:
+            &lt;/label&gt;
+
+            &lt;select id="imageFormat"&gt;
+                &lt;option value="png"&gt;PNG&lt;/option&gt;
+                &lt;option value="jpeg"&gt;JPEG&lt;/option&gt;
+            &lt;/select&gt;
+
+        &lt;/div&gt;
+
+        &lt;!-- Drop zone --&gt;
+        &lt;div class="drop-zone" id="dropZone"&gt;
+            Drop an image or XLSX file here
+        &lt;/div&gt;
+
+        &lt;!-- Execute --&gt;
+        &lt;button class="execute" id="execute"&gt;
+            Execute
+        &lt;/button&gt;
+
+        &lt;!-- Status --&gt;
+        &lt;div class="status" id="status"&gt;&lt;/div&gt;
+
+        &lt;!-- Preview --&gt;
+        &lt;div class="preview" id="preview"&gt;
+            &lt;h2&gt;Preview&lt;/h2&gt;
+            &lt;img id="previewImage" alt="Image preview"&gt;
+        &lt;/div&gt;
+
+
+    &lt;/div&gt;
+
+    &lt;script&gt;
+
+        const inputFile = document.getElementById("inputFile");
+        const inputPath = document.getElementById("inputPath");
+        const outputPath = document.getElementById("outputPath");
+        const outputButton = document.getElementById("outputButton");
+        const executeButton = document.getElementById("execute");
+        const dropZone = document.getElementById("dropZone");
+
+        const imageFormatRow = document.getElementById("imageFormatRow");
+        const imageFormat = document.getElementById("imageFormat");
+
+        const status = document.getElementById("status");
+
+        const preview = document.getElementById("preview");
+        const previewImage = document.getElementById("previewImage");
+
+        let selectedFile = null;
+
+
+        /* -------------------------------------------------
+         * Utilities
+         * ------------------------------------------------- */
+
+        function getMode() {
+            return document.querySelector(
+                'input[name="mode"]:checked'
+            ).value;
+        }
+
+
+        function getExtension(filename) {
+            const parts = filename.split(".");
+            if (parts.length &lt; 2) {
+                return "";
+            }
+
+            return parts[parts.length - 1].toLowerCase();
+        }
+
+
+        function getBaseName(filename) {
+            const lastDot = filename.lastIndexOf(".");
+
+            if (lastDot === -1) {
+                return filename;
+            }
+
+            return filename.substring(0, lastDot);
+        }
+
+
+        function setStatus(message, type) {
+            status.textContent = message;
+            status.className = "status " + type;
+        }
+
+
+        function clearStatus() {
+            status.textContent = "";
+            status.className = "status";
+        }
+
+
+        /* -------------------------------------------------
+         * Mode switching
+         * ------------------------------------------------- */
+
+        document.querySelectorAll(
+            'input[name="mode"]'
+        ).forEach(radio =&gt; {
+
+            radio.addEventListener("change", () =&gt; {
+
+                const mode = getMode();
+
+                imageFormatRow.style.display =
+                    mode === "toimage" ? "flex" : "none";
+
+                updateDefaultOutput();
+
+            });
+
+        });
+
+
+        /* -------------------------------------------------
+         * Input file
+         * ------------------------------------------------- */
+
+        inputFile.addEventListener("change", () =&gt; {
+
+            if (!inputFile.files.length) {
+                return;
+            }
+
+            setInputFile(inputFile.files[0]);
+
+        });
+
+
+        function setInputFile(file) {
+
+            selectedFile = file;
+
+            inputPath.value = file.name;
+
+            updateDefaultOutput();
+
+            clearStatus();
+
+            /*
+             * Preview image input.
+             */
+            if (getMode() === "toxlsx") {
+
+                const extension = getExtension(file.name);
+
+                if (
+                    extension === "png" ||
+                    extension === "jpg" ||
+                    extension === "jpeg"
+                ) {
+                    const url = URL.createObjectURL(file);
+
+                    previewImage.src = url;
+                    preview.style.display = "block";
+                }
+
+            }
+
+        }
+
+
+        /* -------------------------------------------------
+         * Default output name
+         * ------------------------------------------------- */
+
+        function updateDefaultOutput() {
+
+            if (!selectedFile) {
+                return;
+            }
+
+            const mode = getMode();
+
+            const base = getBaseName(selectedFile.name);
+
+            if (mode === "toxlsx") {
+                outputPath.value = base + ".xlsx";
+            }
+            else {
+                const format = imageFormat.value;
+                outputPath.value = base + "." + format;
+            }
+
+        }
+
+
+        imageFormat.addEventListener(
+            "change",
+            updateDefaultOutput
+        );
+
+
+        /* -------------------------------------------------
+         * Output file picker
+         *
+         * Browsers cannot normally choose an arbitrary
+         * output filename using a standard file dialog.
+         *
+         * We therefore use the browser download mechanism.
+         * The text field still allows the desired filename.
+         * ------------------------------------------------- */
+
+        outputButton.addEventListener("click", () =&gt; {
+
+            outputPath.focus();
+            outputPath.select();
+
+        });
+
+
+        /* -------------------------------------------------
+         * Drag &amp; drop
+         * ------------------------------------------------- */
+
+        dropZone.addEventListener("dragover", event =&gt; {
+
+            event.preventDefault();
+
+            dropZone.classList.add("dragover");
+
+        });
+
+
+        dropZone.addEventListener("dragleave", () =&gt; {
+
+            dropZone.classList.remove("dragover");
+
+        });
+
+
+        dropZone.addEventListener("drop", event =&gt; {
+
+            event.preventDefault();
+
+            dropZone.classList.remove("dragover");
+
+            const files = event.dataTransfer.files;
+
+            if (!files.length) {
+                return;
+            }
+
+            setInputFile(files[0]);
+
+        });
+
+
+        /* -------------------------------------------------
+         * Image -&gt; XLSX
+         * ------------------------------------------------- */
+
+        async function imageToXlsx(file, filename) {
+
+            const bitmap = await createImageBitmap(file);
+
+            const canvas = document.createElement("canvas");
+
+            canvas.width = bitmap.width;
+            canvas.height = bitmap.height;
+
+            const ctx = canvas.getContext("2d", {
+                willReadFrequently: true
+            });
+
+            ctx.drawImage(bitmap, 0, 0);
+
+            const imageData = ctx.getImageData(
+                0,
+                0,
+                bitmap.width,
+                bitmap.height
+            );
+
+            const pixels = imageData.data;
+
+            const workbook = XLSX.utils.book_new();
+
+            const channels = {
+                red: [],
+                green: [],
+                blue: []
+            };
+
+            /*
+             * Construct one row per image row.
+             *
+             * pixels layout:
+             *
+             * R G B A R G B A ...
+             */
+
+            for (let y = 0; y &lt; bitmap.height; y++) {
+
+                const redRow = [];
+                const greenRow = [];
+                const blueRow = [];
+
+                for (let x = 0; x &lt; bitmap.width; x++) {
+
+                    const index =
+                        (y * bitmap.width + x) * 4;
+
+                    redRow.push(pixels[index]);
+                    greenRow.push(pixels[index + 1]);
+                    blueRow.push(pixels[index + 2]);
+
+                }
+
+                channels.red.push(redRow);
+                channels.green.push(greenRow);
+                channels.blue.push(blueRow);
+
+            }
+
+
+            /*
+             * Create the three worksheets.
+             */
+
+            for (const [name, data] of Object.entries(channels)) {
+
+                const worksheet =
+                    XLSX.utils.aoa_to_sheet(data);
+
+                XLSX.utils.book_append_sheet(
+                    workbook,
+                    worksheet,
+                    name
+                );
+
+            }
+
+
+            /*
+             * Download XLSX.
+             */
+
+            XLSX.writeFile(
+                workbook,
+                filename || "image.xlsx"
+            );
+
+        }
+
+
+        /* -------------------------------------------------
+         * XLSX -&gt; Image
+         * ------------------------------------------------- */
+
+        async function xlsxToImage(file, filename) {
+
+            const arrayBuffer = await file.arrayBuffer();
+
+            const workbook = XLSX.read(
+                arrayBuffer,
+                {
+                    type: "array"
+                }
+            );
+
+            const requiredSheets = [
+                "red",
+                "green",
+                "blue"
+            ];
+
+            /*
+             * Check sheets.
+             */
+
+            for (const sheet of requiredSheets) {
+
+                if (!workbook.SheetNames.includes(sheet)) {
+
+                    throw new Error(
+                        `Missing worksheet "${sheet}"`
+                    );
+
+                }
+
+            }
+
+
+            /*
+             * Convert worksheets into arrays.
+             */
+
+            const channels = {};
+
+            for (const sheetName of requiredSheets) {
+
+                const worksheet =
+                    workbook.Sheets[sheetName];
+
+                channels[sheetName] =
+                    XLSX.utils.sheet_to_json(
+                        worksheet,
+                        {
+                            header: 1,
+                            defval: 0,
+                            raw: true
+                        }
+                    );
+
+            }
+
+
+            const red = channels.red;
+            const green = channels.green;
+            const blue = channels.blue;
+
+
+            /*
+             * Determine image dimensions.
+             */
+
+            const height = red.length;
+
+            if (height === 0) {
+                throw new Error(
+                    "The red worksheet is empty."
+                );
+            }
+
+            const width = red[0].length;
+
+            if (width === 0) {
+                throw new Error(
+                    "The red worksheet is empty."
+                );
+            }
+
+
+            /*
+             * Check dimensions.
+             */
+
+            if (
+                green.length !== height ||
+                blue.length !== height
+            ) {
+                throw new Error(
+                    "Channel sheets have different dimensions."
+                );
+            }
+
+            for (let y = 0; y &lt; height; y++) {
+
+                if (
+                    green[y].length !== width ||
+                    blue[y].length !== width
+                ) {
+                    throw new Error(
+                        "Channel sheets have different dimensions."
+                    );
+                }
+
+            }
+
+
+            /*
+             * Build RGBA pixel buffer.
+             */
+
+            const pixels =
+                new Uint8ClampedArray(
+                    width * height * 4
+                );
+
+            for (let y = 0; y &lt; height; y++) {
+
+                for (let x = 0; x &lt; width; x++) {
+
+                    const index =
+                        (y * width + x) * 4;
+
+                    pixels[index] =
+                        clampByte(red[y][x]);
+
+                    pixels[index + 1] =
+                        clampByte(green[y][x]);
+
+                    pixels[index + 2] =
+                        clampByte(blue[y][x]);
+
+                    pixels[index + 3] = 255;
+
+                }
+
+            }
+
+
+            /*
+             * Put pixels into Canvas.
+             */
+
+            const canvas =
+                document.createElement("canvas");
+
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx =
+                canvas.getContext("2d");
+
+            const imageData =
+                new ImageData(
+                    pixels,
+                    width,
+                    height
+                );
+
+            ctx.putImageData(
+                imageData,
+                0,
+                0
+            );
+
+
+            /*
+             * Show preview.
+             */
+
+            const mime =
+                imageFormat.value === "jpeg"
+                    ? "image/jpeg"
+                    : "image/png";
+
+            const quality =
+                imageFormat.value === "jpeg"
+                    ? 0.95
+                    : undefined;
+
+            const dataUrl =
+                canvas.toDataURL(
+                    mime,
+                    quality
+                );
+
+            previewImage.src = dataUrl;
+            preview.style.display = "block";
+
+
+            /*
+             * Download.
+             */
+
+            const extension =
+                imageFormat.value;
+
+            const finalFilename =
+                filename ||
+                `image.${extension}`;
+
+            downloadDataUrl(
+                dataUrl,
+                finalFilename
+            );
+
+        }
+
+
+        function clampByte(value) {
+
+            value = Number(value);
+
+            if (!Number.isFinite(value)) {
+                return 0;
+            }
+
+            return Math.max(
+                0,
+                Math.min(
+                    255,
+                    Math.round(value)
+                )
+            );
+
+        }
+
+
+        /* -------------------------------------------------
+         * Download helper
+         * ------------------------------------------------- */
+
+        function downloadDataUrl(dataUrl, filename) {
+
+            const link =
+                document.createElement("a");
+
+            link.href = dataUrl;
+            link.download = filename;
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            link.remove();
+
+        }
+
+
+        /* -------------------------------------------------
+         * Execute
+         * ------------------------------------------------- */
+
+        executeButton.addEventListener(
+            "click",
+            async () =&gt; {
+
+                clearStatus();
+
+                try {
+
+                    if (!selectedFile) {
+
+                        throw new Error(
+                            "No input file selected."
+                        );
+
+                    }
+
+                    const mode = getMode();
+
+                    let output = outputPath.value.trim();
+
+                    if (!output) {
+
+                        const base =
+                            getBaseName(
+                                selectedFile.name
+                            );
+
+                        if (mode === "toxlsx") {
+                            output = base + ".xlsx";
+                        }
+                        else {
+                            output =
+                                base +
+                                "." +
+                                imageFormat.value;
+                        }
+
+                    }
+
+
+                    /*
+                     * Validate image -&gt; XLSX.
+                     */
+
+                    if (mode === "toxlsx") {
+
+                        const extension =
+                            getExtension(
+                                selectedFile.name
+                            );
+
+                        if (
+                            ![
+                                "jpg",
+                                "jpeg",
+                                "png"
+                            ].includes(extension)
+                        ) {
+
+                            throw new Error(
+                                "Unsupported image format. " +
+                                "Supported formats are: jpg, jpeg, png"
+                            );
+
+                        }
+
+
+                        if (
+                            getExtension(output) !==
+                            "xlsx"
+                        ) {
+
+                            throw new Error(
+                                "Output path is not a spreadsheet."
+                            );
+
+                        }
+
+
+                        setStatus(
+                            "Converting image to XLSX...",
+                            "processing"
+                        );
+
+                        await imageToXlsx(
+                            selectedFile,
+                            output
+                        );
+
+                    }
+
+
+                    /*
+                     * Validate XLSX -&gt; image.
+                     */
+
+                    else {
+
+                        if (
+                            getExtension(
+                                selectedFile.name
+                            ) !== "xlsx"
+                        ) {
+
+                            throw new Error(
+                                "Input file is not a spreadsheet."
+                            );
+
+                        }
+
+
+                        const outputExtension =
+                            getExtension(output);
+
+                        if (
+                            ![
+                                "png",
+                                "jpg",
+                                "jpeg"
+                            ].includes(outputExtension)
+                        ) {
+
+                            throw new Error(
+                                "Output must be an image."
+                            );
+
+                        }
+
+
+                        setStatus(
+                            "Converting XLSX to image...",
+                            "processing"
+                        );
+
+                        await xlsxToImage(
+                            selectedFile,
+                            output
+                        );
+
+                    }
+
+
+                    setStatus(
+                        `Saved "${output}"`,
+                        "success"
+                    );
+
+                }
+                catch (error) {
+
+                    console.error(error);
+
+                    setStatus(
+                        error.message,
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* -------------------------------------------------
+         * Initial state
+         * ------------------------------------------------- */
+
+        imageFormatRow.style.display = "none";
+
+    &lt;/script&gt;
+
 </content><category term="extra"/></entry><entry><title>Introduction to Programming</title><link href="https://grybouilli.github.io/introduction-to-programming.html" rel="alternate"/><published>2026-09-07T00:00:00+02:00</published><updated>2026-09-07T00:00:00+02:00</updated><author><name>Nicolas Gry</name></author><id>tag:grybouilli.github.io,2026-09-07:/introduction-to-programming.html</id><summary type="html">&lt;h1&gt;About&lt;/h1&gt;
 &lt;p&gt;"Introduction to Programming" is a class I teach at the Université Jean Monnet de Saint-Étienne, to first year Master students in the &lt;a href="https://master-digicrea.univ-st-etienne.fr/en/index.html"&gt;Digicrea Master&lt;/a&gt; and the &lt;a href="https://www.univ-st-etienne.fr/fr/formation/master-XB/master-XB/master-arts-parcours-creation-contemporaine-et-nouvelles-technologies-option-realisateur-en-informatique-musicale-option-arts-numeriques-KX4SMCQZ.html"&gt;RIM Master&lt;/a&gt;. The students primarily come from an artistic background and have supposedly no knowledge in computing, and very light background in mathematics …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;About&lt;/h1&gt;
 &lt;p&gt;"Introduction to Programming" is a class I teach at the Université Jean Monnet de Saint-Étienne, to first year Master students in the &lt;a href="https://master-digicrea.univ-st-etienne.fr/en/index.html"&gt;Digicrea Master&lt;/a&gt; and the &lt;a href="https://www.univ-st-etienne.fr/fr/formation/master-XB/master-XB/master-arts-parcours-creation-contemporaine-et-nouvelles-technologies-option-realisateur-en-informatique-musicale-option-arts-numeriques-KX4SMCQZ.html"&gt;RIM Master&lt;/a&gt;. The students primarily come from an artistic background and have supposedly no knowledge in computing, and very light background in mathematics.&lt;/p&gt;
@@ -280,29 +1198,8 @@
 &lt;/ul&gt;
 &lt;h4&gt;Programs&lt;/h4&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=""&gt;image_exporter&lt;/a&gt;: a small companion program to convert image files to .xlsx files and back.&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;On MacOS&lt;/strong&gt;: after downloading the program, open a terminal and type:&lt;br&gt;
-  &lt;code&gt;chmod +x ~/Downloads/image_exporter&lt;/code&gt; &lt;br&gt;
-  &lt;code&gt;./Downloads/image_exporter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://grybouilli.github.io/extra/image_exporter.html"&gt;image_exporter&lt;/a&gt;: a web interface to convert image files to .xlsx files and back.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Windows 11&lt;/th&gt;
-&lt;th&gt;MacOS&lt;/th&gt;
-&lt;th&gt;Linux&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=""&gt;image_exporter for Windows&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href="https://filesender.renater.fr/download.php?token=10850b44-f11f-4290-a2ce-eca4dd51bcb3&amp;amp;files_ids=76091335"&gt;image_exporter for MacOS&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href="https://filesender.renater.fr/download.php?token=f0ba5af4-ee99-45b1-9627-38a456fb5678&amp;amp;files_ids=76090705"&gt;image_exporter for Linux&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://grybouilli.github.io/extra/img_visualizer.html"&gt;img_visualizer&lt;/a&gt;: a web interface to visualize images from their pixel values. B/W and RGB mode available.&lt;/li&gt;
