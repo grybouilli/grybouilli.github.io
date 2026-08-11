@@ -26,6 +26,7 @@ The practise examples and assignment revolve around image processing and audio /
 #### Exercises resources
 | Practise | Problem | Resource |
 | ---------- | -------- | -------- |
+| Practise 8 | Problem B.1 | [landscape.xlsx]({static}courses/intro_to_programming/p3/landscape.xlsx) | 
 | Practise 9 | Problem 1.3 | [Archive]({static}courses/intro_to_programming/p9/1.3.alice.zip) | 
 | Practise 9 | Problem 2.2 | [Archive]({static}courses/intro_to_programming/p9/2.2.alice.zip) | 
 | Practise 9 | Problem 3.1 | [Archive]({static}courses/intro_to_programming/p9/3.1.alice.zip) | 
