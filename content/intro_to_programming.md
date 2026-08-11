@@ -49,7 +49,4 @@ The practise examples and assignment revolve around image processing and audio /
 #### Programs
 
 * [image_exporter](https://grybouilli.github.io/extra/image_exporter.html): a web interface to convert image files to .xlsx files and back.
-
-------
-
 * [img_visualizer](https://grybouilli.github.io/extra/img_visualizer.html): a web interface to visualize images from their pixel values. B/W and RGB mode available.
