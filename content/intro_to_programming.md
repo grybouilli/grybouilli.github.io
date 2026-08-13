@@ -20,6 +20,7 @@ The practise examples and assignment revolve around image processing and audio /
 |[Lecture 3]({static}courses/intro_to_programming/l3/main.pdf)|  [Sheet 1]({static}courses/intro_to_programming/p3/1_matrices.pdf) |[Assignment 3]({static}courses/intro_to_programming/a3/assignment.pdf)|
 |[Lecture 4]({static}courses/intro_to_programming/l4/main.pdf)|  [Sheet 1]({static}courses/intro_to_programming/p4/1_exercises.pdf) |[Assignment 4]({static}courses/intro_to_programming/a4/assignment.pdf)|
 |[Lecture 5]({static}courses/intro_to_programming/l5/main.pdf)|  [Sheet 1]({static}courses/intro_to_programming/p5/1_pointers.pdf) [Sheet 2]({static}courses/intro_to_programming/p5/2_stl_iterators.pdf) [Sheet 3]({static}courses/intro_to_programming/p5/3_txtfiles.pdf) [Sheet 4]({static}courses/intro_to_programming/p5/4_audio_files.pdf) |[Assignment 5]({static}courses/intro_to_programming/a5/assignment.pdf)|
+|[Lecture 6]({static}courses/intro_to_programming/l6/main.pdf)|  [Sheet 1]({static}courses/intro_to_programming/p6/1_classes.pdf) [Sheet 2]({static}courses/intro_to_programming/p6/2_generic_functions.pdf) |[Assignment 6]({static}courses/intro_to_programming/a6/assignment.pdf)|
 
 
 
