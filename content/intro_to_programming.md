@@ -40,8 +40,8 @@ The practise examples and assignment revolve around image processing and audio /
 #### Assignment resources
 | Assignment      | Resource       |
 | --------------- | ---------------- |
-| Assignment 4: Exercise 1 | [Windows]({static}courses/intro_to_programming/a4/windows/problem1.zip) [MacOS]({static}courses/intro_to_programming/a4/macos/problem1.zip) [Linux]({static}courses/intro_to_programming/a4/macos/problem1.zip)|
-| Assignment 4: Exercise 2 | [Windows]({static}courses/intro_to_programming/a4/windows/problem2.zip) [MacOS]({static}courses/intro_to_programming/a4/macos/problem2.zip) [Linux]({static}courses/intro_to_programming/a4/macos/problem2.zip)|
+| Assignment 4: Exercise 1 | [Windows]({static}courses/intro_to_programming/a4/windows/problem1.zip) [MacOS]({static}courses/intro_to_programming/a4/macos/problem1.zip) [Linux]({static}courses/intro_to_programming/a4/linux/problem1.zip)|
+| Assignment 4: Exercise 2 | [Windows]({static}courses/intro_to_programming/a4/windows/problem2.zip) [MacOS]({static}courses/intro_to_programming/a4/macos/problem2.zip) [Linux]({static}courses/intro_to_programming/a4/linux/problem2.zip)|
 | Assignment 5 | [Resource]({static}courses/intro_to_programming/a5/assignment5.zip)|
 
 <br>
