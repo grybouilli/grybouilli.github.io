@@ -14,20 +14,13 @@ The practise examples and assignment revolve around image processing and audio /
 ## Exam info
 ### Class of 2026/2027
 
-The exam will take place on **Tuesday the 20th of October 2026.** It will **start at 9.00am and end at 12.00pm.**
+The final exam is cancelled due to university blockage. In replacement of the originally planned exam, a group project has to be completed.
 
-The topics to review for the exams are:
+The subject of the project can be found [here]({static}courses/intro_to_programming/project/assignment.pdf). It contains all the information, from subject, to submission, group formation, grading, etc. Read it thouroughly.
 
-* All of lecture 1: variables, booleans, if-else if-else, switch-case, for-loop, while-loop, etc
-* All of lecture 2: functions, functions signature, functions arguments, functions overloads, reference vs copy, default arguments, returning from a function, the main function, etc 
-* Lecture 3: arrays, matrices, vectors; what they are, how to declare them, how to index them, how to add and remove elements from a ``std::vector``, be able to read nested for-loops and write code in nested for-loops.  
-* Lecture 4: be familiar with paths, know the difference between relative and absolute path, understand basic cmake commands.
-  
-The conditions in which the exam will take place:
+The archive to download to complete the project can be found [here]({static}courses/intro_to_programming/project/project.zip).
 
-* You are allowed the use of a self prepared cheat sheet: the cheat sheet must be **handwritten**. You can use front **and** back. Prepare the cheat sheet at home, bring it for the exam.
-* The exam will be on paper.
-* There will be MCQ, code understanding questions and code completions questions. All of them will be written in the style of the practise exercises seen in class and the style of assignment 2 and 3 (you will not be prompted to write code from scratch, but rather complete things like in 2 and 3).
+Due date is **November 13th of 2026, 23:59:59**.
 
 
 ## Lectures  
